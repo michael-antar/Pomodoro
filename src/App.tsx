@@ -1,11 +1,13 @@
-import './App.css'
+import Timer from './Timer.tsx'
+
+import './App.css';
 
 function App() {
   return (
     <>
-      Initial Commit
+      <Timer />
     </>
   )
 }
 
-export default App
+export default App;
