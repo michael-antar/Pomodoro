@@ -41,6 +41,26 @@ function Timer() {
         return () => clearInterval(interval);
     }, [isActive]);
 
+    useEffect(() => {
+        function handleKeyDown(e: KeyboardEvent) {
+            if (!isDone) {
+                if (e.code === 'Space') {
+                    handleStartStop();
+                } else if (e.code === 'ArrowLeft') {
+                    handleRedo();
+                } else if (e.code === 'ArrowRight') {
+                    handleSkip();
+                }
+            }
+            if (e.code === 'ArrowUp') {
+                handleRestart();
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isActive, steps]);
+
     function nextStep() {
         setIsActive(false);
         setSteps([...steps.slice(1)]);
