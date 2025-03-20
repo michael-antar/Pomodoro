@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 
-import playIcon from './assets/play.svg';
-import pauseIcon from './assets/pause.svg';
-import redoIcon from './assets/redo.svg';
-import skipIcon from './assets/skip.svg';
-import restartIcon from './assets/restart.svg';
+import playIcon from './assets/playIcon.svg';
+import pauseIcon from './assets/pauseIcon.svg';
+import redoIcon from './assets/redoIcon.svg';
+import skipIcon from './assets/skipIcon.svg';
+import restartIcon from './assets/restartIcon.svg';
+import IconButton from './IconButton';
+import StepList from './StepList';
 
 const WORK_STEP = { name: 'work', duration: 15 };
 const SHORT_BREAK_STEP = { name: 'short break', duration: 3 };
@@ -21,7 +23,7 @@ const initialSteps = [
     {...LONG_BREAK_STEP, id: 8}
 ];
 
-function Timer() {
+export default function Timer() {
     const [steps, setSteps] = useState(initialSteps);
     const [seconds, setSeconds] = useState(initialSteps[0].duration);
 
@@ -145,29 +147,14 @@ function Timer() {
         <div>
             <h1>{!isDone ? `Current Step: ${steps[0].name}` : "All Done"}</h1>
             <h1>Timer: {displayTime(seconds)}</h1>
-            <button onClick={handleRedo} disabled={isDone}>
-                <img src={redoIcon} alt="Redo" width="30" height="30" />
-            </button>
-            <button onClick={handleStartStop} disabled={isDone}>
-                {isActive 
-                    ? <img src={pauseIcon} alt="Pause" width="70" height="50" /> 
-                    : <img src={playIcon} alt="Play" width="70" height="50" />
-                }
-            </button>
-            <button onClick={handleSkip} disabled={isDone}>
-                <img src={skipIcon} alt="Skip" width="30" height="30" />
-            </button>
-            <h3>Remaining Steps</h3>
-            <ol>
-                {steps.slice(1).map(step => {
-                    return <li key={step.id}>{step.name}</li>
-                })}
-            </ol>
-            <button onClick={handleRestart}>
-                <img src={restartIcon} alt="Restart" width="30" height="30" />
-            </button>
-        </div>
-    )
-}
+            
+            <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} disabled={isDone} width={30} height={30}/>
+            <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} disabled={isDone} width={70} height={50}/>
+            <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} disabled={isDone} width={30} height={30}/>
 
-export default Timer;
+            <StepList steps={steps}/>
+
+            <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart} width={30} height={30} />
+        </div>
+    );
+}
