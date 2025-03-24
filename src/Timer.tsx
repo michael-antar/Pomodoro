@@ -1,12 +1,17 @@
+import './Timer.css';
+
 import { useState, useEffect } from 'react';
+
+import IconButton from './components/IconButton/IconButton';
+import StepList from './components/StepList/StepList';
+
+import { displayTime } from './utils/DisplayTime';
 
 import playIcon from './assets/playIcon.svg';
 import pauseIcon from './assets/pauseIcon.svg';
 import redoIcon from './assets/redoIcon.svg';
 import skipIcon from './assets/skipIcon.svg';
 import restartIcon from './assets/restartIcon.svg';
-import IconButton from './IconButton';
-import StepList from './StepList';
 
 const WORK_STEP = { name: 'work', duration: 15 };
 const SHORT_BREAK_STEP = { name: 'short break', duration: 3 };
@@ -136,12 +141,6 @@ export default function Timer() {
         setIsActive(false);
 
         setIsDone(false);
-    }
-
-    function displayTime(seconds: number) {
-        const mm = (seconds < 600 ? '0' : '') + (Math.floor(seconds / 60));
-        const ss = ((seconds % 60) < 10 ? '0' : '') + (seconds % 60);
-        return `${mm}:${ss}`;
     }
 
     return (

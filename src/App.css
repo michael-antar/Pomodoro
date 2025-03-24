@@ -3,31 +3,6 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/* button {
-    
-} */
-
-.iconButton {
-    box-sizing: content-box;
-
-    padding: 0;
-    /* margin: 0; */
-
-    border: 0;
-    border-radius: 5px;
-
-    /* border: 2px solid red; */
-}
-
-.iconButton > img {
-    /* margin: auto; */
-
-    width: 70%;
-    height: 70%;
-
-    /* border: 2px solid green; */
-}
-
 #root {
     display: flex;
     justify-content: center;
@@ -35,51 +10,4 @@
     /* margin: 0; */
 
     /* border: 2px solid blue; */
-}
-
-#timerBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-
-    background-color: #FFFFFF20;
-    border-radius: 5px;
-
-    width: 500px;
-    height: 300px;
-
-    /* padding: 20px; */
-    margin: 0;
-
-    /* border: 2px solid green; */
-}
-
-#currentStep {
-    display: flex;
-    justify-content: center;
-    width: 70%;
-
-    background-color: #00000020;
-    border-radius: 5px;
-
-    margin: 0;
-}
-
-#timerDisplay {
-    font-size: 70px;
-    
-    margin: 0;
-}
-
-.controlPanel {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-
-    width: 50%;
-
-    margin: 0;
-
-    /* border: 2px solid purple; */
 }

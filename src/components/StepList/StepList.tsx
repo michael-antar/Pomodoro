@@ -1,3 +1,5 @@
+import './StepList.css'
+
 export default function StepList( { steps }: { steps: { id: number; name: string}[] }) {
     return (
         <>
