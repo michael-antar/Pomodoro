@@ -31,7 +31,7 @@ export default function Timer() {
     const [isDone, setIsDone] = useState(false);
 
     const [title, setTitle] = useState('Pomodoro Timer');
-    const [bgColor, setBgColor] = useState('white');
+    const [bgColor, setBgColor] = useState('#FF6347');
 
     useEffect(() => {
         if (!isActive || seconds <= 0) return;
@@ -99,16 +99,16 @@ export default function Timer() {
 
         setBgColor(() => {
             if (steps.length <= 1) {
-                return "white"
+                return "#f0cf29"
             }
             if (steps[1].name === "work") {
-                return "red";
+                return "#FF6347";
             }
             else if (steps[1].name === "short break") {
                 return "lightblue";
             }
             else if (steps[1].name === "long break") {
-                return "blue";
+                return "#34eba4";
             }
             return "white";
         })
@@ -132,6 +132,7 @@ export default function Timer() {
         setSteps(initialSteps);
         setSeconds(initialSteps[0].duration);
         setTitle(`Start ${initialSteps[0].name}`);
+        setBgColor('#FF6347');
         setIsActive(false);
 
         setIsDone(false);
@@ -145,16 +146,20 @@ export default function Timer() {
 
     return (
         <div>
-            <h1>{!isDone ? `Current Step: ${steps[0].name}` : "All Done"}</h1>
-            <h1>Timer: {displayTime(seconds)}</h1>
-            
-            <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} disabled={isDone} width={30} height={30}/>
-            <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} disabled={isDone} width={70} height={50}/>
-            <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} disabled={isDone} width={30} height={30}/>
+            <div id='timerBox'>
+                <h2 id='currentStep'>{!isDone ? steps[0].name : "All Done"}</h2> 
+                <h1 id='timerDisplay'>{displayTime(seconds)}</h1>
+                
+                <div className='controlPanel'>
+                    <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} disabled={isDone}/>
+                    <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} disabled={isDone} width={120} height={70}/>
+                    <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} disabled={isDone}/>
+                </div>
+            </div>
 
             <StepList steps={steps}/>
 
-            <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart} width={30} height={30} />
+            <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
         </div>
     );
 }
