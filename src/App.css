@@ -3,11 +3,13 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+body {
+    background-color: #aaaaaa;
+}
+
 #root {
     display: flex;
     justify-content: center;
-
-    /* margin: 0; */
 
     /* border: 2px solid blue; */
 }

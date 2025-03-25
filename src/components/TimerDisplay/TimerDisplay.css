@@ -1,0 +1,67 @@
+@font-face {
+    font-family: sevenSegment;
+    src: url('../../assets/7segment.ttf') format('truetype');
+}
+
+#timerDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    box-sizing: content-box;
+
+    width: 400px;
+    height: 120px;
+
+    margin: 0;
+    margin-top: 10px;
+
+    background-color: #94b0a0;
+
+    border: 2px solid #253335;
+    border-radius: 5px;
+
+    box-shadow: 0 0 10px black inset;
+
+    /* border: 2px solid pink; */
+}
+
+#timerDisplay::after {
+    content: " ";
+
+    position: absolute;
+
+    width: 400px;
+    height: 120px;
+
+    background: #FFFFFF50;
+
+    border: 1px solid #FFFFFF80;
+    border-radius: 5px;
+
+    backdrop-filter: blur(0.4px);
+}
+
+.digit, .colon {
+    font: 120px sevenSegment;
+}
+
+.digit {
+    width: 55px;
+
+    position: relative;
+}
+
+.digit:after {
+    content: "8";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    opacity: 0.1;
+}

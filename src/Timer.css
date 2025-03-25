@@ -1,36 +1,77 @@
 #timerBox {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
 
-    background-color: #FFFFFF20;
-    border-radius: 5px;
+    box-sizing: content-box;
 
     width: 500px;
-    height: 300px;
+    height: 320px;
 
-    /* padding: 20px; */
     margin: 0;
 
+    background-color: #545c5d;
+
+    border: 2px solid #253335;
+    border-radius: 30px;
+
+    box-shadow: 
+        0 0 10px black inset,
+        0 0 30px black;
+
     /* border: 2px solid green; */
+}
+
+@font-face {
+    font-family: bruceForever;
+    src: url('assets/BruceForever.ttf') format('truetype');
 }
 
 #currentStep {
     display: flex;
     justify-content: center;
-    width: 70%;
 
-    background-color: #00000020;
+    width: 50%;
+
+    margin: 0;
+    margin-top: 5px;
+
+    background-color: #FF6347;
+
+    border: 2px solid #253335;
     border-radius: 5px;
 
-    margin: 0;
+    box-shadow: 
+        0 0 5px black inset,
+        0 0 2px black;
+
+    font-family: bruceForever;
+    text-transform: uppercase;
 }
 
-#timerDisplay {
-    font-size: 70px;
-    
-    margin: 0;
+#innerTimeBox {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* box-sizing: content-box; */
+
+    width: 420px;
+    height: 240px;
+
+    margin-top: 40px;
+
+    background-color: #b2b0a9;
+    background: radial-gradient(#b2b0a9, #6d6b67);
+
+    border: 2px solid #253335;
+    border-radius: 5px;
+
+    box-shadow: 0 0 10px black;
+
+    /* border: 2px solid black; */
 }
 
 .controlPanel {
@@ -38,9 +79,10 @@
     justify-content: space-between;
     align-items: baseline;
 
-    width: 50%;
+    width: 60%;
 
     margin: 0;
+    margin-top: 10px;
 
     /* border: 2px solid purple; */
 }

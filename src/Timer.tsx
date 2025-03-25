@@ -2,6 +2,7 @@ import './Timer.css';
 
 import { useState, useEffect } from 'react';
 
+import TimerDisplay from './components/TimerDisplay/TimerDisplay';
 import IconButton from './components/IconButton/IconButton';
 import StepList from './components/StepList/StepList';
 
@@ -13,7 +14,7 @@ import redoIcon from './assets/redoIcon.svg';
 import skipIcon from './assets/skipIcon.svg';
 import restartIcon from './assets/restartIcon.svg';
 
-const WORK_STEP = { name: 'work', duration: 15 };
+const WORK_STEP = { name: 'pomodoro', duration: 15 };
 const SHORT_BREAK_STEP = { name: 'short break', duration: 3 };
 const LONG_BREAK_STEP = { name: 'long break', duration: 6 };
 
@@ -36,7 +37,7 @@ export default function Timer() {
     const [isDone, setIsDone] = useState(false);
 
     const [title, setTitle] = useState('Pomodoro Timer');
-    const [bgColor, setBgColor] = useState('#FF6347');
+    const [stepColor, setStepColor] = useState('#FF6347');
 
     useEffect(() => {
         if (!isActive || seconds <= 0) return;
@@ -82,10 +83,6 @@ export default function Timer() {
         document.title = title;
     }, [title])
 
-    useEffect(() => {
-        document.body.style.backgroundColor = bgColor;
-    }, [bgColor]);
-
     function nextStep() {
         setIsActive(false);
         setSteps([...steps.slice(1)]);
@@ -102,11 +99,11 @@ export default function Timer() {
             setTitle('All done');
         }
 
-        setBgColor(() => {
+        setStepColor(() => {
             if (steps.length <= 1) {
                 return "#f0cf29"
             }
-            if (steps[1].name === "work") {
+            if (steps[1].name === "pomodoro") {
                 return "#FF6347";
             }
             else if (steps[1].name === "short break") {
@@ -137,7 +134,7 @@ export default function Timer() {
         setSteps(initialSteps);
         setSeconds(initialSteps[0].duration);
         setTitle(`Start ${initialSteps[0].name}`);
-        setBgColor('#FF6347');
+        setStepColor('#FF6347');
         setIsActive(false);
 
         setIsDone(false);
@@ -146,13 +143,15 @@ export default function Timer() {
     return (
         <div>
             <div id='timerBox'>
-                <h2 id='currentStep'>{!isDone ? steps[0].name : "All Done"}</h2> 
-                <h1 id='timerDisplay'>{displayTime(seconds)}</h1>
-                
-                <div className='controlPanel'>
-                    <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} disabled={isDone}/>
-                    <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} disabled={isDone} width={120} height={70}/>
-                    <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} disabled={isDone}/>
+                <h2 id='currentStep' style={{backgroundColor: stepColor}}>{!isDone ? steps[0].name : "All Done"}</h2>
+                <div id='innerTimeBox'>
+                    <TimerDisplay seconds={seconds} />
+                    
+                    <div className='controlPanel'>
+                        <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} disabled={isDone}/>
+                        <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} disabled={isDone} width={80}/>
+                        <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} disabled={isDone}/>
+                    </div>
                 </div>
             </div>
 
