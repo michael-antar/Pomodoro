@@ -14,9 +14,9 @@ import redoIcon from './assets/redoIcon.svg';
 import skipIcon from './assets/skipIcon.svg';
 import restartIcon from './assets/restartIcon.svg';
 
-const WORK_STEP = { name: 'pomodoro', duration: 15 };
-const SHORT_BREAK_STEP = { name: 'short break', duration: 3 };
-const LONG_BREAK_STEP = { name: 'long break', duration: 6 };
+const WORK_STEP = { name: 'pomodoro', duration: 15, color: '#FF6347' };
+const SHORT_BREAK_STEP = { name: 'short break', duration: 3, color: '#27BAAE' };
+const LONG_BREAK_STEP = { name: 'long break', duration: 6, color: '#34EBA4' };
 
 const initialSteps = [
     {...WORK_STEP, id: 1},
@@ -32,12 +32,11 @@ const initialSteps = [
 export default function Timer() {
     const [steps, setSteps] = useState(initialSteps);
     const [seconds, setSeconds] = useState(initialSteps[0].duration);
-
-    const [isActive, setIsActive] = useState(false);
-    const [isDone, setIsDone] = useState(false);
+    const [stepColor, setStepColor] = useState(initialSteps[0].color);
 
     const [title, setTitle] = useState('Pomodoro Timer');
-    const [stepColor, setStepColor] = useState('#FF6347');
+
+    const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
         if (!isActive || seconds <= 0) return;
@@ -61,59 +60,41 @@ export default function Timer() {
 
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
-            if (!isDone) {
-                if (e.code === 'Space') {
-                    handleStartStop();
-                } else if (e.code === 'ArrowLeft') {
-                    handleRedo();
-                } else if (e.code === 'ArrowRight') {
-                    handleSkip();
-                }
+            if (e.code === 'Space') {
+                handleStartStop();
+            } 
+            else if (e.code === 'ArrowLeft') {
+                handleRedo();
+            } 
+            else if (e.code === 'ArrowRight') {
+                handleSkip();
             }
-            if (e.code === 'ArrowUp') {
+            else if (e.code === 'ArrowUp') {
                 handleRestart();
             }
         }
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isActive, steps]);
+    }, []);
 
     useEffect(() => {
         document.title = title;
     }, [title])
 
     function nextStep() {
+        if (steps.length === 1) {
+            handleRestart();
+            return;
+        }
+
         setIsActive(false);
+
         setSteps([...steps.slice(1)]);
 
-        if (steps.length > 1) {
-            setSeconds(steps[1].duration);
-
-            setTitle(`Start ${steps[1].name}`);
-        }
-        else {
-            setSeconds(0);
-            setIsDone(true);
-
-            setTitle('All done');
-        }
-
-        setStepColor(() => {
-            if (steps.length <= 1) {
-                return "#f0cf29"
-            }
-            if (steps[1].name === "pomodoro") {
-                return "#FF6347";
-            }
-            else if (steps[1].name === "short break") {
-                return "lightblue";
-            }
-            else if (steps[1].name === "long break") {
-                return "#34eba4";
-            }
-            return "white";
-        })
+        setSeconds(steps[1].duration);
+        setTitle(`Start ${steps[1].name}`);
+        setStepColor(steps[1].color);
     }
 
     function handleStartStop() {
@@ -131,31 +112,29 @@ export default function Timer() {
     }
 
     function handleRestart() {
+        setIsActive(false);
         setSteps(initialSteps);
         setSeconds(initialSteps[0].duration);
         setTitle(`Start ${initialSteps[0].name}`);
-        setStepColor('#FF6347');
-        setIsActive(false);
-
-        setIsDone(false);
+        setStepColor(initialSteps[0].color);
     }
 
     return (
         <div>
             <div id='timerBox'>
-                <h2 id='currentStep' style={{backgroundColor: stepColor}}>{!isDone ? steps[0].name : "All Done"}</h2>
+                <h2 id='currentStep' style={{backgroundColor: stepColor}}>{steps[0].name}</h2>
                 <div id='innerTimeBox'>
                     <TimerDisplay seconds={seconds} />
                     
                     <div className='controlPanel'>
-                        <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} disabled={isDone}/>
-                        <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} disabled={isDone} width={80}/>
-                        <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} disabled={isDone}/>
+                        <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} />
+                        <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} width={80} />
+                        <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} />
                     </div>
                 </div>
             </div>
 
-            <StepList steps={steps}/>
+            <StepList steps={steps.slice(1)}/>
 
             <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
         </div>

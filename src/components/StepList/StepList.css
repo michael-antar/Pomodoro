@@ -1,0 +1,54 @@
+@font-face {
+    font-family: permanentMarker;
+    src: url('../../assets/PermanentMarker.ttf') format('truetype');
+}
+
+#stepList {
+    position: relative;
+    box-sizing: border-box;
+
+    width: 270px;
+    height: 250px;
+
+    padding: 10px;
+    margin: 20px;
+    margin-left: 0;
+
+    box-shadow: 
+        0 10px 10px -5px #0b0b0b,
+        25px 30px 10px -25px #434343,
+        -25px 30px 10px -25px #434343;
+
+    background: #f1f83d;
+}
+
+#stepList::after {
+    content: " ";
+    position: absolute;
+
+    width: 270px;
+    height: 50px;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: #000000;
+    opacity: 0.05;
+}
+
+#stepListTitle {
+    margin: 0;
+
+    font-family: permanentMarker;
+    font-size: 30px;
+}
+
+#stepListItemContainer {
+    margin: 0;
+}
+
+#stepListItem {
+    font-family: permanentMarker;
+}
