@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import TimerDisplay from './components/TimerDisplay/TimerDisplay';
 import IconButton from './components/IconButton/IconButton';
-import StepList from './components/StepList/StepList';
+import StepDisplay from './components/StepDisplay/StepDisplay';
 
 import { displayTime } from './utils/DisplayTime';
 
@@ -19,42 +19,42 @@ const SHORT_BREAK_STEP = { name: 'short break', duration: 3, color: '#27BAAE' };
 const LONG_BREAK_STEP = { name: 'long break', duration: 6, color: '#34EBA4' };
 
 const initialSteps = [
-    {...WORK_STEP, id: 1},
-    {...SHORT_BREAK_STEP, id: 2},
-    {...WORK_STEP, id: 3},
-    {...SHORT_BREAK_STEP, id: 4},
-    {...WORK_STEP, id: 5},
-    {...SHORT_BREAK_STEP, id: 6},
-    {...WORK_STEP, id: 7},
-    {...LONG_BREAK_STEP, id: 8}
+    {...WORK_STEP, id: 0},
+    {...SHORT_BREAK_STEP, id: 1},
+    {...WORK_STEP, id: 2},
+    {...SHORT_BREAK_STEP, id: 3},
+    {...WORK_STEP, id: 4},
+    {...SHORT_BREAK_STEP, id: 5},
+    {...WORK_STEP, id: 6},
+    {...LONG_BREAK_STEP, id: 7}
 ];
 
 export default function Timer() {
-    const [steps, setSteps] = useState(initialSteps);
+    const [stepIndex, setStepIndex] = useState(0);
     const [seconds, setSeconds] = useState(initialSteps[0].duration);
-    const [stepColor, setStepColor] = useState(initialSteps[0].color);
-
-    const [title, setTitle] = useState('Pomodoro Timer');
 
     const [isActive, setIsActive] = useState(false);
+    const [hasStarted, setHasStarted] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
+
 
     useEffect(() => {
-        if (!isActive || seconds <= 0) return;
-    
+        if (!isActive) return;
+
+        let localSeconds = seconds;
+
         const interval = setInterval(() => {
-            setSeconds((s) => {
-            
-                // Timer done
-                if (s <= 1) {
-                    clearInterval(interval);
-                    nextStep();
-                    return 0;
-                }
-                setTitle(`${displayTime(s - 1)} - ${steps[0].name}`);
-                return s - 1;
-            });
+            localSeconds--;
+
+            if (localSeconds <= 0) {
+                clearInterval(interval);
+                handleNextStep();
+            }
+            else {
+                setSeconds(localSeconds);
+            }
         }, 1000);
-    
+
         return () => clearInterval(interval);
     }, [isActive]);
 
@@ -79,22 +79,32 @@ export default function Timer() {
     }, []);
 
     useEffect(() => {
-        document.title = title;
-    }, [title])
-
-    function nextStep() {
-        if (steps.length === 1) {
-            handleRestart();
-            return;
+        if (isActive && !hasStarted) {
+            setHasStarted(true);
         }
+    }, [isActive]);
 
+    useEffect(() => {
+        setIsInitialized(true);
+    }, []);
+
+
+    function handleNextStep() {
+        setHasStarted(false);
         setIsActive(false);
 
-        setSteps([...steps.slice(1)]);
+        setStepIndex((prevIndex) => {
+            const newIndex = prevIndex + 1;
 
-        setSeconds(steps[1].duration);
-        setTitle(`Start ${steps[1].name}`);
-        setStepColor(steps[1].color);
+            if (newIndex >= initialSteps.length) {
+                handleRestart();
+                return 0;
+            }
+
+            setSeconds(initialSteps[newIndex].duration);
+
+            return newIndex;
+        });
     }
 
     function handleStartStop() {
@@ -102,27 +112,39 @@ export default function Timer() {
     }
 
     function handleRedo() {
-        setSeconds(steps[0].duration);
-        setTitle(`Start ${steps[0].name}`);
+        setSeconds(initialSteps[stepIndex].duration);
         setIsActive(false);
+        setHasStarted(false);
     }
 
     function handleSkip() {
-        nextStep();
+        handleNextStep();
     }
 
     function handleRestart() {
         setIsActive(false);
-        setSteps(initialSteps);
+        setStepIndex(0);
         setSeconds(initialSteps[0].duration);
-        setTitle(`Start ${initialSteps[0].name}`);
-        setStepColor(initialSteps[0].color);
+        setHasStarted(false);
     }
+
+
+    const currentTitle = isInitialized
+        ? hasStarted
+            ? `${displayTime(seconds)} - ${initialSteps[stepIndex].name}`
+            : `Start ${initialSteps[stepIndex].name}`
+        : 'Pomodoro Timer';
+    document.title = currentTitle;
+
+    const totalDuration = initialSteps.reduce((sum, step) => {
+        return sum + step.duration;
+    }, 0);
+
 
     return (
         <div>
             <div id='timerBox'>
-                <h2 id='currentStep' style={{backgroundColor: stepColor}}>{steps[0].name}</h2>
+                <h2 id='currentStep' style={{backgroundColor: initialSteps[stepIndex].color}}>{initialSteps[stepIndex].name}</h2>
                 <div id='innerTimeBox'>
                     <TimerDisplay seconds={seconds} />
                     
@@ -134,7 +156,7 @@ export default function Timer() {
                 </div>
             </div>
 
-            <StepList steps={steps.slice(1)}/>
+            <StepDisplay steps={initialSteps} activeIndex={stepIndex} totalDuration={totalDuration}/>
 
             <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
         </div>

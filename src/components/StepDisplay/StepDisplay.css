@@ -3,7 +3,12 @@
     src: url('../../assets/PermanentMarker.ttf') format('truetype');
 }
 
-#stepList {
+@font-face {
+    font-family: bruceForever;
+    src: url('assets/BruceForever.ttf') format('truetype');
+}
+
+/* #stepList {
     position: relative;
     box-sizing: border-box;
 
@@ -20,35 +25,36 @@
         -25px 30px 10px -25px #434343;
 
     background: #f1f83d;
-}
+} */
 
-#stepList::after {
-    content: " ";
-    position: absolute;
-
-    width: 270px;
-    height: 50px;
-
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    background-color: #000000;
-    opacity: 0.05;
-}
 
 #stepListTitle {
     margin: 0;
 
-    font-family: permanentMarker;
+    font-family: bruceForever;
     font-size: 30px;
 }
 
 #stepListItemContainer {
-    margin: 0;
+    display: flex;
+    align-items: center;
+
+    margin: 30px;
+
+    width: 350px;
+
+    /* border: 1px solid red; */
 }
 
-#stepListItem {
-    font-family: permanentMarker;
+.stepListItem {
+    box-sizing: border-box;
+
+    height: 10px;
+    float: left;
+
+    border: 1px solid black;
+}
+
+.stepListItem.activeStepListItem {
+    height: 20px;
 }
