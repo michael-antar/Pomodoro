@@ -8,30 +8,19 @@ import StepDisplay from './components/StepDisplay/StepDisplay';
 
 import { displayTime } from './utils/DisplayTime';
 
+import { steps } from './data/stepData';
+
 import playIcon from './assets/playIcon.svg';
 import pauseIcon from './assets/pauseIcon.svg';
 import redoIcon from './assets/redoIcon.svg';
 import skipIcon from './assets/skipIcon.svg';
 import restartIcon from './assets/restartIcon.svg';
 
-const WORK_STEP = { name: 'pomodoro', duration: 15, color: '#FF6347' };
-const SHORT_BREAK_STEP = { name: 'short break', duration: 3, color: '#27BAAE' };
-const LONG_BREAK_STEP = { name: 'long break', duration: 6, color: '#34EBA4' };
 
-const initialSteps = [
-    {...WORK_STEP, id: 0},
-    {...SHORT_BREAK_STEP, id: 1},
-    {...WORK_STEP, id: 2},
-    {...SHORT_BREAK_STEP, id: 3},
-    {...WORK_STEP, id: 4},
-    {...SHORT_BREAK_STEP, id: 5},
-    {...WORK_STEP, id: 6},
-    {...LONG_BREAK_STEP, id: 7}
-];
 
 export default function Timer() {
     const [stepIndex, setStepIndex] = useState(0);
-    const [seconds, setSeconds] = useState(initialSteps[0].duration);
+    const [seconds, setSeconds] = useState(steps[0].duration);
 
     const [isActive, setIsActive] = useState(false);
     const [hasStarted, setHasStarted] = useState(false);
@@ -96,12 +85,12 @@ export default function Timer() {
         setStepIndex((prevIndex) => {
             const newIndex = prevIndex + 1;
 
-            if (newIndex >= initialSteps.length) {
+            if (newIndex >= steps.length) {
                 handleRestart();
                 return 0;
             }
 
-            setSeconds(initialSteps[newIndex].duration);
+            setSeconds(steps[newIndex].duration);
 
             return newIndex;
         });
@@ -112,7 +101,7 @@ export default function Timer() {
     }
 
     function handleRedo() {
-        setSeconds(initialSteps[stepIndex].duration);
+        setSeconds(steps[stepIndex].duration);
         setIsActive(false);
         setHasStarted(false);
     }
@@ -124,19 +113,19 @@ export default function Timer() {
     function handleRestart() {
         setIsActive(false);
         setStepIndex(0);
-        setSeconds(initialSteps[0].duration);
+        setSeconds(steps[0].duration);
         setHasStarted(false);
     }
 
 
     const currentTitle = isInitialized
         ? hasStarted
-            ? `${displayTime(seconds)} - ${initialSteps[stepIndex].name}`
-            : `Start ${initialSteps[stepIndex].name}`
+            ? `${displayTime(seconds)} - ${steps[stepIndex].name}`
+            : `Start ${steps[stepIndex].name}`
         : 'Pomodoro Timer';
     document.title = currentTitle;
 
-    const totalDuration = initialSteps.reduce((sum, step) => {
+    const totalDuration = steps.reduce((sum, step) => {
         return sum + step.duration;
     }, 0);
 
@@ -144,7 +133,7 @@ export default function Timer() {
     return (
         <div>
             <div id='timerBox'>
-                <h2 id='currentStep' style={{backgroundColor: initialSteps[stepIndex].color}}>{initialSteps[stepIndex].name}</h2>
+                <h2 id='currentStep' style={{backgroundColor: steps[stepIndex].color}}>{steps[stepIndex].name}</h2>
                 <div id='innerTimeBox'>
                     <TimerDisplay seconds={seconds} />
                     
@@ -156,7 +145,7 @@ export default function Timer() {
                 </div>
             </div>
 
-            <StepDisplay steps={initialSteps} activeIndex={stepIndex} totalDuration={totalDuration}/>
+            <StepDisplay steps={steps} activeIndex={stepIndex} seconds={seconds} totalDuration={totalDuration}/>
 
             <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
         </div>

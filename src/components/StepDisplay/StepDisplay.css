@@ -1,60 +1,183 @@
 @font-face {
-    font-family: permanentMarker;
-    src: url('../../assets/PermanentMarker.ttf') format('truetype');
-}
-
-@font-face {
     font-family: bruceForever;
     src: url('assets/BruceForever.ttf') format('truetype');
 }
 
-/* #stepList {
-    position: relative;
-    box-sizing: border-box;
+#stepDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 
-    width: 270px;
-    height: 250px;
+    box-sizing: content-box;
 
-    padding: 10px;
-    margin: 20px;
-    margin-left: 0;
+    width: 500px;
+    height: 150px;
+
+    margin-top: 20px;
+
+    background-color: #545c5d;
+    border: 2px solid #253335;
+    border-radius: 30px;
 
     box-shadow: 
-        0 10px 10px -5px #0b0b0b,
-        25px 30px 10px -25px #434343,
-        -25px 30px 10px -25px #434343;
-
-    background: #f1f83d;
-} */
-
-
-#stepListTitle {
-    margin: 0;
-
-    font-family: bruceForever;
-    font-size: 30px;
+        0 0 10px black inset,
+        0 0 30px black;
 }
 
-#stepListItemContainer {
+#stepDisplayRow {
+    display: flex;
+    justify-content: space-between;
+
+    width: 90%;
+    height: 20%;
+}
+
+#stepDisplayTitle {
+    margin: 0;
+
+    width: 30%;
+    height: 100%;
+
+    background-color: #d0c449;
+
+    border: 2px solid #253335;
+    border-radius: 5px;
+
+    box-shadow: 
+        0 0 5px black inset,
+        0 0 2px black;
+
+    font-family: bruceForever;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#progressBarContainer {
     display: flex;
     align-items: center;
 
-    margin: 30px;
+    position: relative;
 
-    width: 350px;
+    box-sizing: content-box;
 
-    /* border: 1px solid red; */
+    width: 60%;
+    height: 100%;
+
+    background-color: #94b0a0;
+
+    border: 2px solid #253335;
+    border-radius: 5px;
 }
 
-.stepListItem {
+/* Glass Effect */
+#progressBarContainer::after {
+    content: "";
+
+    position: absolute;
     box-sizing: border-box;
 
-    height: 10px;
-    float: left;
+    width: 270px;
+    height: 30px;
 
-    border: 1px solid black;
+    background: #FFFFFF50;
+
+    border: 1px solid #FFFFFF80;
+    border-radius: 5px;
+
+    backdrop-filter: blur(0.4px);
+
+    top: 0;
 }
 
-.stepListItem.activeStepListItem {
-    height: 20px;
+#progressBar {
+    position: relative;
+
+    height: 80%;
+
+    background: repeating-linear-gradient(
+        90deg,
+        #94b0a0 0px 1px, black 1px 9px, #94b0a0  9px 10px 
+    );
+}
+
+#progressBar::after {
+    content: "";
+
+    position: absolute;
+
+    width: 270px;
+    height: 100%;
+
+    background: repeating-linear-gradient(
+        90deg,
+        #94b0a0 0px 1px, black 1px 9px, #94b0a0  9px 10px 
+    );
+
+    opacity: 0.1;
+}
+
+
+#stepItemContainer {
+    display: flex;
+    align-items: center;
+
+    position: relative;
+    box-sizing: content-box;
+
+    width: 90%;
+    height: 30%;
+
+    background-color: #253335;
+
+    border: 2px solid #253335;
+    border-radius: 5px;
+
+    box-shadow: 0 0 10px black;
+}
+
+/* Glass Effect */
+#stepItemContainer::after {
+    content: "";
+
+    position: absolute;
+    box-sizing: border-box;
+
+    width: 450px;
+    height: 45px;
+
+    background: #FFFFFF50;
+
+    border: 1px solid #FFFFFF80;
+    border-radius: 5px;
+
+    backdrop-filter: blur(0.4px);
+
+    top: 0;
+}
+
+.stepItem {
+    box-sizing: border-box;
+
+    height: 80%;
+
+    float: left;
+
+    border: 1px solid #253335;
+
+    opacity: 0.8;
+}
+
+.stepItem:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.stepItem:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.stepItem.active {
+    opacity: 1;
+    height: 100%;
+    border: 1px solid white;
 }

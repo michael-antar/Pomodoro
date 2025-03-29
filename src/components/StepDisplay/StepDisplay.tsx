@@ -1,15 +1,21 @@
 import './StepDisplay.css'
 
 export default function StepDisplay( 
-    { steps, activeIndex, totalDuration }
-    : { steps: { name: string; duration: number; color: string; id: number; }[]; activeIndex: number; totalDuration: number; }) {
+    { steps, activeIndex, seconds, totalDuration }
+    : { steps: { name: string; duration: number; color: string; id: number; }[]; activeIndex: number; seconds: number; totalDuration: number; }) {
     return (
         <div id="stepDisplay">
-            <h3 id="stepListTitle">Remaining Steps</h3>
-            <div id="stepListItemContainer">
+            <div id="stepDisplayRow">
+                <h2 id="stepDisplayTitle">Steps</h2>
+                <div id="progressBarContainer">
+                    <div id="progressBar" style={{width: `${(1 - seconds / steps[activeIndex].duration) * 100}%`, backgroundColor: steps[activeIndex].color}}></div>
+                </div>
+            </div>
+            
+            <div id="stepItemContainer">
                 {steps.map(step => {
                     return <div 
-                            className={`stepListItem${step.id === activeIndex ? " activeStepListItem" : ""}`}
+                            className={`stepItem${step.id === activeIndex ? " active" : ""}`}
                             style={{width: `${step.duration / totalDuration * 100}%`, backgroundColor: step.color}}
                             key={step.id}
                         >
