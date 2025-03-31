@@ -6,9 +6,10 @@ export default function IconButton(
     
     return (
         <button className='iconButton' onClick={onClick} disabled={disabled} style={{width: width}}>
-            <img 
+            <img
                 src={isToggled && iconSrcAlt ? iconSrcAlt : iconSrc}
                 alt={alt}
+                draggable='false'
             />
         </button>
     );

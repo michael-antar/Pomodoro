@@ -1,8 +1,3 @@
-@font-face {
-    font-family: bruceForever;
-    src: url('assets/BruceForever.ttf') format('truetype');
-}
-
 #stepDisplay {
     display: flex;
     flex-direction: column;

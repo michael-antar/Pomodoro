@@ -13,13 +13,17 @@
     box-shadow: 
         0 0 10px #aa5318 inset,
         0 0 10px black;
+}
 
-    /* border: 2px solid red; */
+.iconButton:active {
+    background-color: #ca641f;
+    box-shadow: 
+        0 0 10px #53280b inset,
+        0 0 10px black;
 }
 
 .iconButton > img {
     width: 70%;
     height: 70%;
-
-    /* border: 2px solid green; */
+    user-select: none;
 }

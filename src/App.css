@@ -13,3 +13,8 @@ body {
 
     /* border: 2px solid blue; */
 }
+
+@font-face {
+    font-family: bruceForever;
+    src: url('/src/assets/BruceForever.ttf') format('truetype');
+}

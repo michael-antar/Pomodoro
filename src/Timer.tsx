@@ -1,6 +1,6 @@
 import './Timer.css';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import TimerDisplay from './components/TimerDisplay/TimerDisplay';
 import IconButton from './components/IconButton/IconButton';
@@ -10,8 +10,8 @@ import { displayTime } from './utils/DisplayTime';
 
 import { steps } from './data/stepData';
 
-
 import restartIcon from './assets/restartIcon.svg';
+import buttonSound from './assets/buttonSound.mp3';
 
 
 export default function Timer() {
@@ -21,6 +21,8 @@ export default function Timer() {
     const [isActive, setIsActive] = useState(false);
     const [hasStarted, setHasStarted] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
+
+    const buttonSoundRef = useRef<HTMLAudioElement | null>(null);
 
 
     useEffect(() => {
@@ -46,22 +48,32 @@ export default function Timer() {
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.code === 'Space') {
+                const focusedElement = document.activeElement;
+
+                if (focusedElement && focusedElement.tagName === 'BUTTON') {
+                    return;
+                }
+                
+                e.preventDefault();
                 handleStartStop();
             } 
             else if (e.code === 'ArrowLeft') {
+                e.preventDefault();
                 handleRedo();
             } 
             else if (e.code === 'ArrowRight') {
+                e.preventDefault();
                 handleSkip();
             }
             else if (e.code === 'ArrowUp') {
+                e.preventDefault();
                 handleRestart();
             }
         }
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [handleStartStop, handleRedo, handleSkip, handleRestart]);
 
     useEffect(() => {
         if (isActive && !hasStarted) {
@@ -73,6 +85,17 @@ export default function Timer() {
         setIsInitialized(true);
     }, []);
 
+
+    const playButtonClick = () => {
+        if (!buttonSoundRef.current) {
+            buttonSoundRef.current = new Audio(buttonSound);
+            buttonSoundRef.current.volume = 0.3;
+        }
+        if (buttonSoundRef.current) {
+            buttonSoundRef.current.currentTime = 0;
+            buttonSoundRef.current.play();
+        }
+    }
 
     function handleNextStep() {
         setHasStarted(false);
@@ -93,20 +116,24 @@ export default function Timer() {
     }
 
     function handleStartStop() {
+        playButtonClick();
         setIsActive(!isActive);
     }
 
     function handleRedo() {
+        playButtonClick();
         setSeconds(steps[stepIndex].duration);
         setIsActive(false);
         setHasStarted(false);
     }
 
     function handleSkip() {
+        playButtonClick();
         handleNextStep();
     }
 
     function handleRestart() {
+        playButtonClick();
         setIsActive(false);
         setStepIndex(0);
         setSeconds(steps[0].duration);
@@ -138,7 +165,12 @@ export default function Timer() {
                 handleSkip={handleSkip}
             />
 
-            <StepDisplay steps={steps} activeIndex={stepIndex} seconds={seconds} totalDuration={totalDuration}/>
+            <StepDisplay 
+                steps={steps} 
+                activeIndex={stepIndex} 
+                seconds={seconds} 
+                totalDuration={totalDuration}
+            />
 
             <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
         </div>
