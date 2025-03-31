@@ -12,6 +12,7 @@ import { steps } from './data/stepData';
 
 import restartIcon from './assets/restartIcon.svg';
 import buttonSound from './assets/buttonSound.mp3';
+import alarmSound from './assets/alarmSound.mp3';
 
 
 export default function Timer() {
@@ -23,8 +24,10 @@ export default function Timer() {
     const [isInitialized, setIsInitialized] = useState(false);
 
     const buttonSoundRef = useRef<HTMLAudioElement | null>(null);
+    const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
 
 
+    // Count down time
     useEffect(() => {
         if (!isActive) return;
 
@@ -34,6 +37,7 @@ export default function Timer() {
             localSeconds--;
 
             if (localSeconds <= 0) {
+                playAlarmSound();
                 clearInterval(interval);
                 handleNextStep();
             }
@@ -45,6 +49,7 @@ export default function Timer() {
         return () => clearInterval(interval);
     }, [isActive]);
 
+    // Add keybindings
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.code === 'Space') {
@@ -53,7 +58,7 @@ export default function Timer() {
                 if (focusedElement && focusedElement.tagName === 'BUTTON') {
                     return;
                 }
-                
+
                 e.preventDefault();
                 handleStartStop();
             } 
@@ -86,7 +91,7 @@ export default function Timer() {
     }, []);
 
 
-    const playButtonClick = () => {
+    const playButtonSound = () => {
         if (!buttonSoundRef.current) {
             buttonSoundRef.current = new Audio(buttonSound);
             buttonSoundRef.current.volume = 0.3;
@@ -94,6 +99,17 @@ export default function Timer() {
         if (buttonSoundRef.current) {
             buttonSoundRef.current.currentTime = 0;
             buttonSoundRef.current.play();
+        }
+    }
+
+    const playAlarmSound = () => {
+        if (!alarmSoundRef.current) {
+            alarmSoundRef.current = new Audio(alarmSound);
+            alarmSoundRef.current.volume = 0.3;
+        }
+        if (alarmSoundRef.current) {
+            alarmSoundRef.current.currentTime = 0;
+            alarmSoundRef.current.play();
         }
     }
 
@@ -116,24 +132,24 @@ export default function Timer() {
     }
 
     function handleStartStop() {
-        playButtonClick();
+        playButtonSound();
         setIsActive(!isActive);
     }
 
     function handleRedo() {
-        playButtonClick();
+        playButtonSound();
         setSeconds(steps[stepIndex].duration);
         setIsActive(false);
         setHasStarted(false);
     }
 
     function handleSkip() {
-        playButtonClick();
+        playButtonSound();
         handleNextStep();
     }
 
     function handleRestart() {
-        playButtonClick();
+        playButtonSound();
         setIsActive(false);
         setStepIndex(0);
         setSeconds(steps[0].duration);
