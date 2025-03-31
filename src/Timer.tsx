@@ -10,12 +10,8 @@ import { displayTime } from './utils/DisplayTime';
 
 import { steps } from './data/stepData';
 
-import playIcon from './assets/playIcon.svg';
-import pauseIcon from './assets/pauseIcon.svg';
-import redoIcon from './assets/redoIcon.svg';
-import skipIcon from './assets/skipIcon.svg';
-import restartIcon from './assets/restartIcon.svg';
 
+import restartIcon from './assets/restartIcon.svg';
 
 
 export default function Timer() {
@@ -132,18 +128,15 @@ export default function Timer() {
 
     return (
         <div>
-            <div id='timerBox'>
-                <h2 id='currentStep' style={{backgroundColor: steps[stepIndex].color}}>{steps[stepIndex].name}</h2>
-                <div id='innerTimeBox'>
-                    <TimerDisplay seconds={seconds} />
-                    
-                    <div className='controlPanel'>
-                        <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} />
-                        <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} width={80} />
-                        <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} />
-                    </div>
-                </div>
-            </div>
+            <TimerDisplay 
+                seconds={seconds}
+                stepColor={steps[stepIndex].color}
+                stepName={steps[stepIndex].name}
+                isActive={isActive}
+                handleRedo={handleRedo}
+                handleStartStop={handleStartStop}
+                handleSkip={handleSkip}
+            />
 
             <StepDisplay steps={steps} activeIndex={stepIndex} seconds={seconds} totalDuration={totalDuration}/>
 
