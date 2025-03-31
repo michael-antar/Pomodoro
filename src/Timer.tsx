@@ -27,6 +27,71 @@ export default function Timer() {
     const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
 
 
+    const playButtonSound = () => {
+        if (!buttonSoundRef.current) {
+            buttonSoundRef.current = new Audio(buttonSound);
+            buttonSoundRef.current.volume = 0.3;
+        }
+        if (buttonSoundRef.current) {
+            buttonSoundRef.current.currentTime = 0;
+            buttonSoundRef.current.play();
+        }
+    }
+
+    const playAlarmSound = () => {
+        if (!alarmSoundRef.current) {
+            alarmSoundRef.current = new Audio(alarmSound);
+            alarmSoundRef.current.volume = 0.3;
+        }
+        if (alarmSoundRef.current) {
+            alarmSoundRef.current.currentTime = 0;
+            alarmSoundRef.current.play();
+        }
+    }
+
+    const handleNextStep = () => {
+        setHasStarted(false);
+        setIsActive(false);
+
+        setStepIndex((prevIndex) => {
+            const newIndex = prevIndex + 1;
+
+            if (newIndex >= steps.length) {
+                handleRestart();
+                return 0;
+            }
+
+            setSeconds(steps[newIndex].duration);
+
+            return newIndex;
+        });
+    }
+
+    const handleStartStop = () => {
+        playButtonSound();
+        setIsActive(!isActive);
+    }
+
+    const handleRedo = () => {
+        playButtonSound();
+        setSeconds(steps[stepIndex].duration);
+        setIsActive(false);
+        setHasStarted(false);
+    }
+
+    const handleSkip = () => {
+        playButtonSound();
+        handleNextStep();
+    }
+
+    const handleRestart = () => {
+        playButtonSound();
+        setIsActive(false);
+        setStepIndex(0);
+        setSeconds(steps[0].duration);
+        setHasStarted(false);
+    }
+
     // Count down time
     useEffect(() => {
         if (!isActive) return;
@@ -89,72 +154,6 @@ export default function Timer() {
     useEffect(() => {
         setIsInitialized(true);
     }, []);
-
-
-    const playButtonSound = () => {
-        if (!buttonSoundRef.current) {
-            buttonSoundRef.current = new Audio(buttonSound);
-            buttonSoundRef.current.volume = 0.3;
-        }
-        if (buttonSoundRef.current) {
-            buttonSoundRef.current.currentTime = 0;
-            buttonSoundRef.current.play();
-        }
-    }
-
-    const playAlarmSound = () => {
-        if (!alarmSoundRef.current) {
-            alarmSoundRef.current = new Audio(alarmSound);
-            alarmSoundRef.current.volume = 0.3;
-        }
-        if (alarmSoundRef.current) {
-            alarmSoundRef.current.currentTime = 0;
-            alarmSoundRef.current.play();
-        }
-    }
-
-    function handleNextStep() {
-        setHasStarted(false);
-        setIsActive(false);
-
-        setStepIndex((prevIndex) => {
-            const newIndex = prevIndex + 1;
-
-            if (newIndex >= steps.length) {
-                handleRestart();
-                return 0;
-            }
-
-            setSeconds(steps[newIndex].duration);
-
-            return newIndex;
-        });
-    }
-
-    function handleStartStop() {
-        playButtonSound();
-        setIsActive(!isActive);
-    }
-
-    function handleRedo() {
-        playButtonSound();
-        setSeconds(steps[stepIndex].duration);
-        setIsActive(false);
-        setHasStarted(false);
-    }
-
-    function handleSkip() {
-        playButtonSound();
-        handleNextStep();
-    }
-
-    function handleRestart() {
-        playButtonSound();
-        setIsActive(false);
-        setStepIndex(0);
-        setSeconds(steps[0].duration);
-        setHasStarted(false);
-    }
 
 
     const currentTitle = isInitialized
