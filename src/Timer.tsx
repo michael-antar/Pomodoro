@@ -2,13 +2,14 @@ import './Timer.css';
 
 import { useState, useEffect, useRef } from 'react';
 
+import Header from './components/Header/Header';
 import TimerDisplay from './components/TimerDisplay/TimerDisplay';
 import IconButton from './components/IconButton/IconButton';
 import StepDisplay from './components/StepDisplay/StepDisplay';
 
 import { displayTime } from './utils/DisplayTime';
 
-import { steps } from './data/stepData';
+import { initialSteps } from './data/stepData';
 
 import restartIcon from './assets/restartIcon.svg';
 import buttonSound from './assets/buttonSound.mp3';
@@ -16,6 +17,7 @@ import alarmSound from './assets/alarmSound.mp3';
 
 
 export default function Timer() {
+    const [steps, setSteps] = useState(initialSteps);
     const [stepIndex, setStepIndex] = useState(0);
     const [seconds, setSeconds] = useState(steps[0].duration);
 
@@ -92,6 +94,26 @@ export default function Timer() {
         setHasStarted(false);
     }
 
+    const handleChangeDuration = (stepId: number, duration: number) => {
+
+        const nextSteps = steps.map((step) => {
+            if (step.id === stepId) {
+                return {
+                    ...step,
+                    duration: duration
+                }
+            }
+            else {
+                return step;
+            }
+        });
+        setSteps(nextSteps);
+    }
+
+    const handleStepsReorder = (newSteps: { name: string; duration: number; color: string; id: number; }[]) => {
+        setSteps(newSteps);
+    }
+
     // Count down time
     useEffect(() => {
         if (!isActive) return;
@@ -146,6 +168,10 @@ export default function Timer() {
     }, [handleStartStop, handleRedo, handleSkip, handleRestart]);
 
     useEffect(() => {
+        handleRestart();
+    }, [steps])
+
+    useEffect(() => {
         if (isActive && !hasStarted) {
             setHasStarted(true);
         }
@@ -169,7 +195,13 @@ export default function Timer() {
 
 
     return (
-        <div>
+        <>
+            <Header 
+                steps={steps} 
+                handleChangeDuration={handleChangeDuration}
+                handleStepsReorder={handleStepsReorder}
+            />
+
             <TimerDisplay 
                 seconds={seconds}
                 stepColor={steps[stepIndex].color}
@@ -188,6 +220,6 @@ export default function Timer() {
             />
 
             <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
-        </div>
+        </>
     );
 }
