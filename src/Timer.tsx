@@ -69,6 +69,13 @@ export default function Timer() {
         });
     }
 
+    const resetTimer = () => {
+        setIsActive(false);
+        setStepIndex(0);
+        setSeconds(steps[0].duration);
+        setHasStarted(false);
+    }
+
     const handleStartStop = () => {
         playButtonSound();
         setIsActive(!isActive);
@@ -88,10 +95,7 @@ export default function Timer() {
 
     const handleRestart = () => {
         playButtonSound();
-        setIsActive(false);
-        setStepIndex(0);
-        setSeconds(steps[0].duration);
-        setHasStarted(false);
+        resetTimer();
     }
 
     const handleChangeDuration = (stepId: number, duration: number) => {
@@ -168,7 +172,7 @@ export default function Timer() {
     }, [handleStartStop, handleRedo, handleSkip, handleRestart]);
 
     useEffect(() => {
-        handleRestart();
+        resetTimer();
     }, [steps])
 
     useEffect(() => {

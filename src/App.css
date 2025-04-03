@@ -16,5 +16,10 @@ body {
 
 @font-face {
     font-family: bruceForever;
-    src: url('/src/assets/BruceForever.ttf') format('truetype');
+    src: url('./src/assets/BruceForever.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: sevenSegment;
+    src: url('./src/assets/7segment.ttf') format('truetype');
 }

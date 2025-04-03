@@ -106,11 +106,6 @@
     backdrop-filter: blur(0.4px);
 }
 
-@font-face {
-    font-family: sevenSegment;
-    src: url('../../assets/7segment.ttf') format('truetype');
-}
-
 .digit, .colon {
     font: 120px sevenSegment;
 }

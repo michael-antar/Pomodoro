@@ -13,9 +13,9 @@ export default function StepDisplay(
             </div>
             
             <div id="stepItemContainer">
-                {steps.map(step => {
+                {steps.map((step, index) => {
                     return <div 
-                            className={`stepItem${step.id === activeIndex ? " active" : ""}`}
+                            className={`stepItem${index === activeIndex ? " active" : ""}`}
                             style={{width: `${step.duration / totalDuration * 100}%`, backgroundColor: step.color}}
                             key={step.id}
                         >
