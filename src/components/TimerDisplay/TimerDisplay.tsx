@@ -9,9 +9,26 @@ import pauseIcon from '../../assets/pauseIcon.svg';
 import redoIcon from '../../assets/redoIcon.svg';
 import skipIcon from '../../assets/skipIcon.svg';
 
-export default function TimerDisplay(
-    { seconds, stepColor, stepName, isActive, handleRedo, handleStartStop, handleSkip } 
-    : { seconds: number; stepColor: string; stepName: string; isActive: boolean; handleRedo: () => void; handleStartStop: () => void; handleSkip: () => void}) {
+interface TimerDisplayProps {
+    seconds: number; 
+    stepColor: string; 
+    stepName: string; 
+    isActive: boolean; 
+    handleRedo: () => void; 
+    handleStartStop: () => void; 
+    handleSkip: () => void
+}
+
+export default function TimerDisplay({ 
+    seconds, 
+    stepColor, 
+    stepName, 
+    isActive, 
+    handleRedo, 
+    handleStartStop, 
+    handleSkip
+} : TimerDisplayProps) {
+    
     let ctr = 0;
 
     return (

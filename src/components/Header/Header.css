@@ -22,6 +22,11 @@
     text-transform: uppercase;
 }
 
+#headerLeftPanel {
+    display: flex;
+    gap: 10px;
+}
+
 #settingsModal {
     display: flex;
     flex-direction: column;

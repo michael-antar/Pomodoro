@@ -1,8 +1,21 @@
 import './StepDisplay.css'
 
-export default function StepDisplay( 
-    { steps, activeIndex, seconds, totalDuration }
-    : { steps: { name: string; duration: number; color: string; id: number; }[]; activeIndex: number; seconds: number; totalDuration: number; }) {
+import { Step } from '../../types';
+
+interface StepDisplayProps {
+    steps: Step[];
+    activeIndex: number; 
+    seconds: number; 
+    totalDuration: number;
+}
+
+export default function StepDisplay({ 
+    steps, 
+    activeIndex, 
+    seconds, 
+    totalDuration 
+} : StepDisplayProps) {
+    
     return (
         <div id="stepDisplay">
             <div id="stepDisplayRow">

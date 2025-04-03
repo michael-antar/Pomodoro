@@ -3,21 +3,24 @@ import './Header.css';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import IconButton from '../IconButton/IconButton';
+import IconButton from '../../components/IconButton/IconButton';
 import SettingsStepList from './SettingsStepList/SettingsStepList';
 
+import restartIcon from '../../assets/restartIcon.svg';
 import settingsIcon from '../../assets/settingsIcon.svg';
 
-type Step = { name: string; duration: number; color: string; id: number};
+import { Step } from '../../types.ts';
 
 interface HeaderProps {
     steps: Step[];
+    handleRestart: () => void;
     handleChangeDuration: (stepId: number, duration: number) => void;
     handleStepsReorder: (newSteps: Step[]) => void;
 }
 
 export default function Header({ 
     steps,
+    handleRestart,
     handleChangeDuration, 
     handleStepsReorder 
 } : HeaderProps) {
@@ -29,6 +32,7 @@ export default function Header({
         <div id='header'>
             <h2 id='headerTitle'>Pomodoro Timer</h2>
             <div id="headerLeftPanel">
+                <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
                 <IconButton iconSrc={settingsIcon} alt='Settings Button' onClick={() =>  setShowSettings(true)} />
             </div>
             {showSettings && createPortal(

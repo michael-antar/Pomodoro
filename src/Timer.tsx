@@ -4,14 +4,12 @@ import { useState, useEffect, useRef } from 'react';
 
 import Header from './components/Header/Header';
 import TimerDisplay from './components/TimerDisplay/TimerDisplay';
-import IconButton from './components/IconButton/IconButton';
 import StepDisplay from './components/StepDisplay/StepDisplay';
 
 import { displayTime } from './utils/DisplayTime';
 
 import { initialSteps } from './data/stepData';
 
-import restartIcon from './assets/restartIcon.svg';
 import buttonSound from './assets/buttonSound.mp3';
 import alarmSound from './assets/alarmSound.mp3';
 
@@ -202,6 +200,7 @@ export default function Timer() {
         <>
             <Header 
                 steps={steps} 
+                handleRestart={handleRestart}
                 handleChangeDuration={handleChangeDuration}
                 handleStepsReorder={handleStepsReorder}
             />
@@ -222,8 +221,6 @@ export default function Timer() {
                 seconds={seconds} 
                 totalDuration={totalDuration}
             />
-
-            <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
         </>
     );
 }
