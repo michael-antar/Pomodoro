@@ -32,8 +32,18 @@ export default function Header({
         <div id='header'>
             <h2 id='headerTitle'>Pomodoro Timer</h2>
             <div id="headerLeftPanel">
-                <IconButton iconSrc={restartIcon} alt="Restart Button" onClick={handleRestart}/>
-                <IconButton iconSrc={settingsIcon} alt='Settings Button' onClick={() =>  setShowSettings(true)} />
+                <IconButton 
+                    iconSrc={restartIcon} 
+                    alt="Restart Button" 
+                    onClick={handleRestart}
+                    tooltip='Press to restart steps'
+                />
+                <IconButton 
+                    iconSrc={settingsIcon} 
+                    alt='Settings Button' 
+                    onClick={() =>  setShowSettings(true)}
+                    tooltip='Press to open settings'
+                />
             </div>
             {showSettings && createPortal(
                 <div id='settingsModal'>

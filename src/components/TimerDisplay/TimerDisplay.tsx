@@ -41,9 +41,27 @@ export default function TimerDisplay({
                     })}
                 </div>
                 <div id='timerControls'>
-                    <IconButton iconSrc={redoIcon} alt="Redo Button" onClick={handleRedo} />
-                    <IconButton iconSrc={playIcon} iconSrcAlt={pauseIcon} isToggled={isActive} alt="Play/Pause Button" onClick={handleStartStop} width={80} />
-                    <IconButton iconSrc={skipIcon} alt="Skip Button" onClick={handleSkip} />
+                    <IconButton 
+                        iconSrc={redoIcon} 
+                        alt="Redo Button" 
+                        onClick={handleRedo} 
+                        tooltip='Press left arrow to redo step'
+                    />
+                    <IconButton 
+                        iconSrc={playIcon} 
+                        iconSrcAlt={pauseIcon} 
+                        isToggled={isActive} 
+                        alt="Play/Pause Button" 
+                        onClick={handleStartStop} 
+                        size={80} 
+                        tooltip='Press space to play/pause step'
+                    />
+                    <IconButton 
+                        iconSrc={skipIcon} 
+                        alt="Skip Button" 
+                        onClick={handleSkip}
+                        tooltip='Press right arrow to skip step'
+                    />
                 </div>
             </div>
         </div>
