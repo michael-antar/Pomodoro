@@ -1,14 +1,13 @@
-const WORK_STEP = { name: 'pomodoro', duration: 15, color: '#FF6347' };
-const SHORT_BREAK_STEP = { name: 'short break', duration: 3, color: '#27BAAE' };
-const LONG_BREAK_STEP = { name: 'long break', duration: 6, color: '#34EBA4' };
+const WORK_STEP = { name: 'pomodoro', color: '#FF6347' };
+const BREAK_STEP = { name: 'break', color: '#27BAAE' };
 
 export const initialSteps = [
-    {...WORK_STEP, id: 0},
-    {...SHORT_BREAK_STEP, id: 1},
-    {...WORK_STEP, id: 2},
-    {...SHORT_BREAK_STEP, id: 3},
-    {...WORK_STEP, id: 4},
-    {...SHORT_BREAK_STEP, id: 5},
-    {...WORK_STEP, id: 6},
-    {...LONG_BREAK_STEP, id: 7}
+    {...WORK_STEP, duration: 15, id: 0},
+    {...BREAK_STEP, duration: 3, id: 1},
+    {...WORK_STEP, duration: 15, id: 2},
+    {...BREAK_STEP, duration: 3, id: 3},
+    {...WORK_STEP, duration: 15, id: 4},
+    {...BREAK_STEP, duration: 3, id: 5},
+    {...WORK_STEP, duration: 15, id: 6},
+    {...BREAK_STEP, duration: 6, id: 7}
 ];
