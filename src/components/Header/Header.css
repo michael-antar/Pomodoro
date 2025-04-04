@@ -2,24 +2,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--black);
     padding-bottom: 5px;
 }
 
 #headerTitle {
-    margin: 0;
-    padding: 0 5px;
-    background-color: #FF6347;
-
-    border: 2px solid #253335;
-    border-radius: 5px;
-
-    box-shadow: 
-        0 0 5px black inset,
-        0 0 2px black;
-
-    font-family: bruceForever;
-    text-transform: uppercase;
+    background-color: var(--step-red);
 }
 
 #headerLeftPanel {

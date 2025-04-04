@@ -12,6 +12,34 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+
+    --black: #253335;
+    --dark-grey: #545C5D;
+    --grey: #6D6B67;
+    --light-grey: #B2B0A9;
+
+    --step-red: #FF6347;
+    --step-blue: #27BAAE;
+
+    --display-green: #94B0A0;
+}
+
+h2 {
+    margin: 0;
+    padding: 0 10px;
+
+    height: fit-content;
+
+    text-align: center;
+    font: 1.5em bruceForever, Verdana;
+    text-transform: uppercase;
+
+    border: 2px solid var(--black);
+    border-radius: 5px;
+
+    box-shadow: 
+        0 0 5px black inset,
+        0 0 2px black;
 }
 
 @font-face {

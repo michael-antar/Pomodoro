@@ -33,7 +33,7 @@ export default function TimerDisplay({
 
     return (
         <div id='timerDisplay'>
-            <h2 id='timerStep' style={{backgroundColor: stepColor}}>{stepName}</h2>
+            <h2 id='timerTitle' style={{backgroundColor: stepColor}}>{stepName}</h2>
             <div id='innerTimer'>
                 <div id="timeBox">
                     {displayTime(seconds).split('').map((char) => {

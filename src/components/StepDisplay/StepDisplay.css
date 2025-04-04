@@ -4,13 +4,11 @@
     align-items: center;
     justify-content: space-evenly;
 
-    box-sizing: content-box;
-
     width: 500px;
     height: 150px;
 
-    background-color: #545c5d;
-    border: 2px solid #253335;
+    background-color: var(--dark-grey);
+    border: 2px solid var(--black);
     border-radius: 30px;
 
     box-shadow: 
@@ -27,23 +25,7 @@
 }
 
 #stepDisplayTitle {
-    margin: 0;
-
-    width: 30%;
-    height: 100%;
-
     background-color: #d0c449;
-
-    border: 2px solid #253335;
-    border-radius: 5px;
-
-    box-shadow: 
-        0 0 5px black inset,
-        0 0 2px black;
-
-    font-family: bruceForever;
-    text-transform: uppercase;
-    text-align: center;
 }
 
 #progressBarContainer {
@@ -57,9 +39,9 @@
     width: 60%;
     height: 100%;
 
-    background-color: #94b0a0;
+    background-color: var(--display-green);
 
-    border: 2px solid #253335;
+    border: 2px solid var(--black);
     border-radius: 5px;
 }
 
@@ -90,7 +72,7 @@
 
     background: repeating-linear-gradient(
         90deg,
-        #94b0a0 0px 1px, black 1px 9px, #94b0a0  9px 10px 
+        var(--display-green) 0px 1px, black 1px 9px, var(--display-green)  9px 10px 
     );
 }
 
@@ -104,7 +86,7 @@
 
     background: repeating-linear-gradient(
         90deg,
-        #94b0a0 0px 1px, black 1px 9px, #94b0a0  9px 10px 
+        var(--display-green) 0px 1px, black 1px 9px, var(--display-green)  9px 10px 
     );
 
     opacity: 0.1;
@@ -121,9 +103,9 @@
     width: 90%;
     height: 30%;
 
-    background-color: #253335;
+    background-color: var(--black);
 
-    border: 2px solid #253335;
+    border: 2px solid var(--black);
     border-radius: 5px;
 
     box-shadow: 0 0 10px black;
@@ -156,7 +138,7 @@
 
     float: left;
 
-    border: 1px solid #253335;
+    border: 1px solid var(--black);
 
     opacity: 0.8;
 }
