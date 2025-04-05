@@ -7,22 +7,24 @@ body {
     background-color: #aaaaaa;
 }
 
-#root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-
+:root {
     --black: #253335;
     --dark-grey: #545C5D;
     --grey: #6D6B67;
     --light-grey: #B2B0A9;
-    --white: #dcdcdc;
+    --white: #DCDCDC;
 
     --step-red: #FF6347;
     --step-blue: #27BAAE;
 
     --display-green: #94B0A0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 h2 {

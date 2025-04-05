@@ -13,9 +13,12 @@ import { initialSteps } from './data/stepData';
 import buttonSound from './assets/buttonSound.mp3';
 import alarmSound from './assets/alarmSound.mp3';
 
+type Step = { name: string; duration: number; color: string; id: number};
+
 
 export default function Timer() {
     const [steps, setSteps] = useState(initialSteps);
+    const nextId = useRef(8);
     const [stepIndex, setStepIndex] = useState(0);
     const [seconds, setSeconds] = useState(steps[0].duration);
 
@@ -112,7 +115,25 @@ export default function Timer() {
         setSteps(nextSteps);
     }
 
-    const handleStepsReorder = (newSteps: { name: string; duration: number; color: string; id: number; }[]) => {
+    const handleAddStep = (name: string) => {
+        const color = name === 'pomodoro' ? '#FF6347' : '#27BAAE';
+        const duration = name === 'pomodoro' ? 15 : 6;
+        setSteps(
+            [...steps,
+            { name: name, duration: duration, color: color, id: nextId.current}]
+        );
+        nextId.current += 1;
+    }
+
+    const handleRemoveStep = (removedId: number) => {
+        setSteps(
+            steps.filter((step) => {
+                return step.id !== removedId;
+            })
+        );
+    }
+
+    const handleReorderSteps = (newSteps: Step[]) => {
         setSteps(newSteps);
     }
 
@@ -201,8 +222,10 @@ export default function Timer() {
             <Header 
                 steps={steps} 
                 handleRestart={handleRestart}
+                handleAddStep={handleAddStep}
+                handleRemoveStep={handleRemoveStep}
+                handleReorderSteps={handleReorderSteps}
                 handleChangeDuration={handleChangeDuration}
-                handleStepsReorder={handleStepsReorder}
             />
 
             <TimerDisplay 

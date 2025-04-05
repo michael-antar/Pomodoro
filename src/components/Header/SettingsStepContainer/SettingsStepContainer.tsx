@@ -1,24 +1,29 @@
-import './SettingsStepList.css'
+import './SettingsStepContainer.css'
 
 import { useState, useRef, useEffect } from 'react';
 
 import DurationInput from './DurationInput/DurationInput';
 
 import dragIcon from '../../../assets/dragIcon.svg';
+import trashIcon from '../../../assets/trashIcon.svg';
 
 type Step = { name: string; duration: number; color: string; id: number};
 
-interface DraggableStepListProps {
+interface SettingsStepContainer {
     steps: Step[];
+    onAdd: (name: string) => void;
+    onRemove: (removedId: number) => void;
     onReorder: (newSteps: Step[]) => void;
     onChangeDuration: (stepId: number, duration: number) => void;
 }
 
 export default function SettingsStepList({
     steps,
+    onAdd,
+    onRemove,
     onReorder,
     onChangeDuration
-} : DraggableStepListProps) {
+} : SettingsStepContainer) {
 
     const [currentSteps, setCurrentSteps] = useState<Step[]>(steps);
     const draggedItemId = useRef<number | null>(null);
@@ -26,6 +31,15 @@ export default function SettingsStepList({
     const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorElementRef = useRef<HTMLElement | null>(null);
 
+
+    const handleRemoveStep = (removeId: number) => {
+        if (steps.length > 1) {
+            onRemove(removeId);
+        }
+        else {
+            alert('Cannot remove last step');
+        }
+    };
 
     // Triggered when dragging starts on the icon (img)
     const handleDragStart = (e: React.DragEvent<HTMLImageElement>, item: Step) => {
@@ -152,7 +166,16 @@ export default function SettingsStepList({
     }, [steps]);
 
     return (
-        <div className='draggable-steps-container'>
+        <div className='settingsStepContainer'>
+            <h3 id='stepSettingsTitle'>Edit and Rearrange Steps</h3>
+            <div id='settingsStepAddButtons'>
+                <button id="addPomodoroButton" onClick={() => onAdd('pomodoro')}>
+                    Add pomodoro
+                </button>
+                <button id="addBreakButton" onClick={() => onAdd('break')}>
+                    Add break
+                </button>
+            </div>
             {currentSteps.map((step) => (
                 <div
                     key={step.id}
@@ -183,7 +206,7 @@ export default function SettingsStepList({
                         onDragStart={(e) => handleDragStart(e, step)}
                         onDragEnd={handleDragEnd}
                     />
-                    <span>{step.name}</span>
+                    <span className='settingsStepName'>{step.name}</span>
                     <label>
                         Duration:
                         <DurationInput
@@ -193,6 +216,11 @@ export default function SettingsStepList({
                             name={`durationInput${step.id}`}
                         />
                     </label>
+                    <img
+                        src={trashIcon}
+                        alt='Remove Step'
+                        onClick={() => handleRemoveStep(step.id)}
+                    />
                 </div>
             ))}
         </div>

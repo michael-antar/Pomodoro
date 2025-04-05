@@ -1,11 +1,23 @@
+#settingsStepAddButtons {
+    margin-bottom: 5px;
+}
+
+#addPomodoroButton {
+    background-color: var(--step-red);
+}
+
+#addBreakButton {
+    background-color: var(--step-blue);
+}
+
 .settingsStepItem {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
     transition: opacity 0.2s ease-in-out, border-top 0.1s linear;
     border-radius: 10px;
-    border-top: 2px solid white;
-    border-bottom: 2px solid white;
+    border-top: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
     width: 350px;
 }
 
@@ -16,11 +28,23 @@
     border-bottom: 2px solid blue;
 }
 
-.settingsStepItem img[alt="Drag Handle"] {
-    cursor: grab;
+.settingsStepName {
+    width: 75px;
+}
+
+.settingsStepItem img {
     width: 20px;
     height: 20px;
 }
+
+.settingsStepItem img[alt="Remove Step"] {
+    cursor: pointer;
+}
+
+.settingsStepItem img[alt="Drag Handle"] {
+    cursor: grab;
+}
+
 .settingsStepItem img[alt="Drag Handle"]:active {
     cursor: grabbing;
 }
