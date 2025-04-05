@@ -1,4 +1,4 @@
-import './SettingsStepContainer.css'
+import './StepSettings.css'
 
 import { useState, useRef, useEffect } from 'react';
 
@@ -9,7 +9,7 @@ import trashIcon from '../../../assets/trashIcon.svg';
 
 type Step = { name: string; duration: number; color: string; id: number};
 
-interface SettingsStepContainer {
+interface StepSettingsProps {
     steps: Step[];
     onAdd: (name: string) => void;
     onRemove: (removedId: number) => void;
@@ -17,13 +17,13 @@ interface SettingsStepContainer {
     onChangeDuration: (stepId: number, duration: number) => void;
 }
 
-export default function SettingsStepList({
+export default function StepSettings({
     steps,
     onAdd,
     onRemove,
     onReorder,
     onChangeDuration
-} : SettingsStepContainer) {
+} : StepSettingsProps) {
 
     const [currentSteps, setCurrentSteps] = useState<Step[]>(steps);
     const draggedItemId = useRef<number | null>(null);
@@ -45,7 +45,7 @@ export default function SettingsStepList({
     const handleDragStart = (e: React.DragEvent<HTMLImageElement>, item: Step) => {
         draggedItemId.current = item.id;
         // Change opacity of parent
-        const parentDiv = e.currentTarget.closest('.settingsStepItem') as HTMLElement | null;
+        const parentDiv = e.currentTarget.closest('.stepSettingsItem') as HTMLElement | null;
         if (parentDiv) {
             try {
                 e.dataTransfer.setDragImage(parentDiv, 10, 10);
@@ -152,7 +152,7 @@ export default function SettingsStepList({
     const handleDragEnd = (e: React.DragEvent<HTMLImageElement>) => {
 
         // Reset opacity of parent
-        const parentDiv = e.currentTarget.closest('.settingsStepItem') as HTMLElement | null;
+        const parentDiv = e.currentTarget.closest('.stepSettingsItem') as HTMLElement | null;
         if (parentDiv) {
             parentDiv.style.opacity = '1';
         }
@@ -166,9 +166,9 @@ export default function SettingsStepList({
     }, [steps]);
 
     return (
-        <div className='settingsStepContainer'>
+        <div className='stepSettings'>
             <h3 id='stepSettingsTitle'>Edit and Rearrange Steps</h3>
-            <div id='settingsStepAddButtons'>
+            <div id='stepSettingsButtons'>
                 <button id="addPomodoroButton" onClick={() => onAdd('pomodoro')}>
                     Add pomodoro
                 </button>
@@ -180,7 +180,7 @@ export default function SettingsStepList({
                 <div
                     key={step.id}
                     id={`step-${step.id}`}
-                    className='settingsStepItem'
+                    className='stepSettingsItem'
                     style={{backgroundColor: step.color}}
 
                     draggable={true}
@@ -192,7 +192,7 @@ export default function SettingsStepList({
                     onDragStartCapture={(e) => {
                         const isTargetHandle = 
                             (e.target as HTMLElement).tagName.toUpperCase() === 'IMG' 
-                            && (e.target as HTMLElement).closest('.settingsStepItem') === e.currentTarget;
+                            && (e.target as HTMLElement).closest('.stepSettingsItem') === e.currentTarget;
 
                         if (!isTargetHandle) {
                             e.preventDefault();
@@ -206,7 +206,7 @@ export default function SettingsStepList({
                         onDragStart={(e) => handleDragStart(e, step)}
                         onDragEnd={handleDragEnd}
                     />
-                    <span className='settingsStepName'>{step.name}</span>
+                    <span className='stepSettingsItemName'>{step.name}</span>
                     <label>
                         Duration:
                         <DurationInput

@@ -26,30 +26,35 @@ export default function Timer() {
     const [hasStarted, setHasStarted] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
 
+    const [buttonVolume, setButtonVolume] = useState(0.3);
+    const [alarmVolume, setAlarmVolume] = useState(0.3);
+
     const buttonSoundRef = useRef<HTMLAudioElement | null>(null);
     const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
 
 
     const playButtonSound = () => {
-        if (!buttonSoundRef.current) {
-            buttonSoundRef.current = new Audio(buttonSound);
-            buttonSoundRef.current.volume = 0.3;
-        }
         if (buttonSoundRef.current) {
             buttonSoundRef.current.currentTime = 0;
             buttonSoundRef.current.play();
         }
     }
 
+    const handleButtonVolume = (volume: number) => {
+        const newVolume = Math.max(0, Math.min(1, volume));
+        setButtonVolume(newVolume);
+    }
+
     const playAlarmSound = () => {
-        if (!alarmSoundRef.current) {
-            alarmSoundRef.current = new Audio(alarmSound);
-            alarmSoundRef.current.volume = 0.3;
-        }
         if (alarmSoundRef.current) {
             alarmSoundRef.current.currentTime = 0;
             alarmSoundRef.current.play();
         }
+    }
+
+    const handleAlarmVolume = (volume: number) => {
+        const newVolume = Math.max(0, Math.min(1, volume));
+        setAlarmVolume(newVolume);
     }
 
     const handleNextStep = () => {
@@ -204,6 +209,27 @@ export default function Timer() {
         setIsInitialized(true);
     }, []);
 
+    // Initializing audios with volumes
+    useEffect(() => {
+        buttonSoundRef.current = new Audio(buttonSound);
+        buttonSoundRef.current.volume = buttonVolume;
+
+        alarmSoundRef.current = new Audio(alarmSound);
+        alarmSoundRef.current.volume = alarmVolume;
+    }, [])
+
+    useEffect(() => {
+        if (buttonSoundRef.current) {
+            buttonSoundRef.current.volume = buttonVolume;
+        }
+    }, [buttonVolume]);
+
+    useEffect(() => {
+        if (alarmSoundRef.current) {
+            alarmSoundRef.current.volume = alarmVolume;
+        }
+    }, [alarmVolume]);
+
 
     const currentTitle = isInitialized
         ? hasStarted
@@ -226,6 +252,10 @@ export default function Timer() {
                 handleRemoveStep={handleRemoveStep}
                 handleReorderSteps={handleReorderSteps}
                 handleChangeDuration={handleChangeDuration}
+                buttonVolume={buttonVolume}
+                onChangeButtonVolume={handleButtonVolume}
+                alarmVolume={alarmVolume}
+                onChangeAlarmVolume={handleAlarmVolume}
             />
 
             <TimerDisplay 

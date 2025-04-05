@@ -1,4 +1,4 @@
-#settingsStepAddButtons {
+#stepSettingsButtons {
     margin-bottom: 5px;
 }
 
@@ -10,7 +10,7 @@
     background-color: var(--step-blue);
 }
 
-.settingsStepItem {
+.stepSettingsItem {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
@@ -21,35 +21,35 @@
     width: 350px;
 }
 
-.settingsStepItem.dragAboveIndicator {
+.stepSettingsItem.dragAboveIndicator {
     border-top: 2px solid blue;
 }
-.settingsStepItem.dragBelowIndicator {
+.stepSettingsItem.dragBelowIndicator {
     border-bottom: 2px solid blue;
 }
 
-.settingsStepName {
+.stepSettingsItemName {
     width: 75px;
 }
 
-.settingsStepItem img {
+.stepSettingsItem img {
     width: 20px;
     height: 20px;
 }
 
-.settingsStepItem img[alt="Remove Step"] {
+.stepSettingsItem img[alt="Remove Step"] {
     cursor: pointer;
 }
 
-.settingsStepItem img[alt="Drag Handle"] {
+.stepSettingsItem img[alt="Drag Handle"] {
     cursor: grab;
 }
 
-.settingsStepItem img[alt="Drag Handle"]:active {
+.stepSettingsItem img[alt="Drag Handle"]:active {
     cursor: grabbing;
 }
 
-.settingsStepItem label {
+.stepSettingsItem label {
     display: flex;
     gap: 10px;
 }
