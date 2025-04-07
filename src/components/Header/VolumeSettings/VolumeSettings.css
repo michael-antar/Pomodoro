@@ -1,0 +1,26 @@
+#buttonVolumeSettings, #alarmVolumeSettings {
+    display: flex;
+    justify-content: space-evenly;
+    width: 400px;
+}
+
+#buttonVolumeSettings label, #alarmVolumeSettings label {
+    width: 40%;
+}
+
+#buttonVolumeSettings span, #alarmVolumeSettings span {
+    width: 20%;
+}
+
+#buttonVolumeSettings input, #alarmVolumeSettings input {
+    width: 40%;
+}
+
+#buttonVolumeSettings {
+    padding-bottom: 5px;
+    border-bottom: 1px solid grey;
+}
+
+#alarmVolumeSettings {
+    padding-top: 5px;
+}

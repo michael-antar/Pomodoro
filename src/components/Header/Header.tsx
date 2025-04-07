@@ -19,9 +19,11 @@ interface HeaderProps {
     handleRemoveStep: (removedId: number) => void;
     handleReorderSteps: (newSteps: Step[]) => void;
     handleChangeDuration: (stepId: number, duration: number) => void;
+    playButtonSound: () => void;
+    playAlarmSound: () => void;
     buttonVolume: number;
-    onChangeButtonVolume: (volume: number) => void;
     alarmVolume: number;
+    onChangeButtonVolume: (volume: number) => void;
     onChangeAlarmVolume: (volume: number) => void;
 }
 
@@ -32,9 +34,11 @@ export default function Header({
     handleRemoveStep,
     handleChangeDuration, 
     handleReorderSteps,
+    playButtonSound,
+    playAlarmSound,
     buttonVolume,
-    onChangeButtonVolume,
     alarmVolume,
+    onChangeButtonVolume,
     onChangeAlarmVolume
 } : HeaderProps) {
 
@@ -75,9 +79,11 @@ export default function Header({
                     />
                     <hr className='settingsLine' />
                     <VolumeSettings
+                        playButtonSound={playButtonSound}
+                        playAlarmSound={playAlarmSound}
                         buttonVolume={buttonVolume}
-                        onChangeButtonVolume={onChangeButtonVolume}
                         alarmVolume={alarmVolume}
+                        onChangeButtonVolume={onChangeButtonVolume}
                         onChangeAlarmVolume={onChangeAlarmVolume}
                     />
 

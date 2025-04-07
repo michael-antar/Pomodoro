@@ -252,9 +252,11 @@ export default function Timer() {
                 handleRemoveStep={handleRemoveStep}
                 handleReorderSteps={handleReorderSteps}
                 handleChangeDuration={handleChangeDuration}
+                playButtonSound={playButtonSound}
+                playAlarmSound={playAlarmSound}
                 buttonVolume={buttonVolume}
-                onChangeButtonVolume={handleButtonVolume}
                 alarmVolume={alarmVolume}
+                onChangeButtonVolume={handleButtonVolume}
                 onChangeAlarmVolume={handleAlarmVolume}
             />
 
