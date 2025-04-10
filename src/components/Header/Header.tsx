@@ -60,30 +60,31 @@ export default function Header({
                 </Button>
             </div>
             {showSettings && createPortal(
-                <div id='settingsModal'>
-                    
-                    <div id='settingsTop'>
-                        <h3 id='settingsTitle'>Settings</h3>
-                        <button id='settingsCloseButton' onClick={() => setShowSettings(false)}>X</button>
+                <div className='settingsBackdrop' onClick={() => setShowSettings(false)}>
+                    <div className='settingsModal' onClick={(e) => e.stopPropagation()}>
+                        
+                        <div id='settingsTop'>
+                            <h3 id='settingsTitle'>Settings</h3>
+                            <button id='settingsCloseButton' onClick={() => setShowSettings(false)}>X</button>
+                        </div>
+                        <hr className='settingsLine' />
+                        <StepSettings
+                            steps={steps}
+                            onAdd={handleAddStep}
+                            onRemove={handleRemoveStep}
+                            onReorder={handleReorderSteps}
+                            onChangeDuration={handleChangeDuration}
+                        />
+                        <hr className='settingsLine' />
+                        <VolumeSettings
+                            playButtonSound={playButtonSound}
+                            playAlarmSound={playAlarmSound}
+                            buttonVolume={buttonVolume}
+                            alarmVolume={alarmVolume}
+                            onChangeButtonVolume={onChangeButtonVolume}
+                            onChangeAlarmVolume={onChangeAlarmVolume}
+                        />
                     </div>
-                    <hr className='settingsLine' />
-                    <StepSettings
-                        steps={steps}
-                        onAdd={handleAddStep}
-                        onRemove={handleRemoveStep}
-                        onReorder={handleReorderSteps}
-                        onChangeDuration={handleChangeDuration}
-                    />
-                    <hr className='settingsLine' />
-                    <VolumeSettings
-                        playButtonSound={playButtonSound}
-                        playAlarmSound={playAlarmSound}
-                        buttonVolume={buttonVolume}
-                        alarmVolume={alarmVolume}
-                        onChangeButtonVolume={onChangeButtonVolume}
-                        onChangeAlarmVolume={onChangeAlarmVolume}
-                    />
-
                 </div>,
                 document.body
             )}

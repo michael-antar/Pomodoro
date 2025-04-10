@@ -15,7 +15,19 @@
     gap: 10px;
 }
 
-#settingsModal {
+.settingsBackdrop {
+    width: 100vw;
+    height: 100vh;
+
+    top: 0;
+    left: 0;
+
+    position: fixed;
+
+    background-color: #00000080;
+}
+
+.settingsModal {
     display: flex;
     flex-direction: column;
     align-items: center;
