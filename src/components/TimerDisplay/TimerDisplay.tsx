@@ -1,6 +1,6 @@
 import './TimerDisplay.css';
 
-import IconButton from '../IconButton/IconButton';
+import TimerButton from './TimerButton/TimerButton';
 
 import { displayTime } from "../../utils/DisplayTime";
 
@@ -41,26 +41,28 @@ export default function TimerDisplay({
                     })}
                 </div>
                 <div id='timerControls'>
-                    <IconButton 
+                    <TimerButton
+                        onClick={handleRedo}
+                        tooltip='Press left arrow to redo step'
+                        style={{width: '60px'}}
                         iconSrc={redoIcon} 
                         alt="Redo Button" 
-                        onClick={handleRedo} 
-                        tooltip='Press left arrow to redo step'
                     />
-                    <IconButton 
+                    <TimerButton 
+                        onClick={handleStartStop}
+                        tooltip='Press space to play/pause step'
+                        style={{width: '80px'}}
                         iconSrc={playIcon} 
                         iconSrcAlt={pauseIcon} 
                         isToggled={isActive} 
                         alt="Play/Pause Button" 
-                        onClick={handleStartStop} 
-                        size={80} 
-                        tooltip='Press space to play/pause step'
                     />
-                    <IconButton 
-                        iconSrc={skipIcon} 
-                        alt="Skip Button" 
+                    <TimerButton
                         onClick={handleSkip}
                         tooltip='Press right arrow to skip step'
+                        style={{width: '60px'}}
+                        iconSrc={skipIcon} 
+                        alt="Skip Button" 
                     />
                 </div>
             </div>

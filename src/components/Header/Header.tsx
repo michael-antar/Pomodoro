@@ -3,12 +3,9 @@ import './Header.css';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import IconButton from '../../components/IconButton/IconButton';
+import Button from '../Button/Button.tsx';
 import StepSettings from './StepSettings/StepSettings.tsx';
 import VolumeSettings from './VolumeSettings/VolumeSettings.tsx'
-
-import restartIcon from '../../assets/restartIcon.svg';
-import settingsIcon from '../../assets/settingsIcon.svg';
 
 import { Step } from '../../types.ts';
 
@@ -49,18 +46,18 @@ export default function Header({
         <div id='header'>
             <h2 id='headerTitle'>Pomodoro Timer</h2>
             <div id="headerLeftPanel">
-                <IconButton 
-                    iconSrc={restartIcon} 
-                    alt="Restart Button" 
+                <Button 
                     onClick={handleRestart}
                     tooltip='Press to restart steps'
-                />
-                <IconButton 
-                    iconSrc={settingsIcon} 
-                    alt='Settings Button' 
+                >
+                    Restart
+                </Button>
+                <Button 
                     onClick={() =>  setShowSettings(true)}
                     tooltip='Press to open settings'
-                />
+                >
+                    Settings
+                </Button>
             </div>
             {showSettings && createPortal(
                 <div id='settingsModal'>

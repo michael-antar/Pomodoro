@@ -1,4 +1,4 @@
-.iconButton {
+.timerButton {
     box-sizing: content-box;
 
     aspect-ratio: 1;
@@ -17,26 +17,14 @@
         0 0 10px black;
 }
 
-.iconButton:active {
+.timerButton:active {
     background-color: #ca641f;
     box-shadow: 
         0 0 10px #53280b inset,
         0 0 10px black;
 }
 
-.iconButton > img {
+.timerButton > img {
     width: 70%;
     height: 70%;
-}
-
-.tooltip-text {
-    background-color: var(--dark-grey);
-    color: var(--white);
-    border: 1px solid var(--light-grey);
-    text-align: center;
-    padding: 5px;
-    position: fixed;
-    z-index: 1;
-    opacity: 0.9;
-    pointer-events: none;
 }

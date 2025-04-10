@@ -1,27 +1,24 @@
-import './IconButton.css';
+import './Button.css';
 
 import { useState, useRef, useEffect } from 'react';
 
-interface IconButtonProps {
-    iconSrc: string; 
-    iconSrcAlt?: string; 
-    isToggled?: boolean; 
-    alt: string; 
+interface ButtonProps {
     onClick: () => void; 
     disabled?: boolean; 
-    size?: number;
     tooltip?: string;
+    children?: React.ReactNode;
+    className?: string;
+    style?: React.CSSProperties;
 }
 
-export default function IconButton({ 
-    iconSrc, 
-    iconSrcAlt, 
-    isToggled = false, 
-    alt, onClick, 
+export default function Button({ 
+    onClick, 
     disabled = false, 
-    size = 50,
-    tooltip
-} : IconButtonProps) {
+    tooltip = '',
+    children,
+    className= '',
+    style
+} : ButtonProps) {
 
     const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0});
     const [showTooltip, setShowTooltip] = useState(false);
@@ -82,20 +79,16 @@ export default function IconButton({
     
 
     return (
-        <button 
-            className='iconButton' 
+        <button
             onClick={onClick} 
             disabled={disabled} 
-            style={{width: size}}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
+            className={className}
+            style={style}
         >
-            <img
-                src={isToggled && iconSrcAlt ? iconSrcAlt : iconSrc}
-                alt={alt}
-                draggable='false'
-            />
+            {children}
             {tooltip && showTooltip && (
                 <span className="tooltip-text" style={{ top: tooltipPosition.top, left: tooltipPosition.left }}>{tooltip}</span>
             )}
