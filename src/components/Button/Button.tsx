@@ -20,13 +20,48 @@ export default function Button({
     style
 } : ButtonProps) {
 
-    const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0});
+    const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({});
     const [showTooltip, setShowTooltip] = useState(false);
 
     const showTimeoutId = useRef<number | null>(null);
     const mousePositionRef = useRef({ x: 0, y: 0 });
 
     const TOOLTIP_DELAY = 1500;
+    const TOOLTIP_OFFSET = 10;
+
+    // Handles position of tooltip relative to mouse and shows it
+    const calculateAndSetTooltipStyle = (clientX: number, clientY: number) => {
+        const screenWidth = window.innerWidth;
+
+        const newTop = clientY + TOOLTIP_OFFSET;
+
+        const baseStyle: React.CSSProperties = {
+            top: `${newTop}px`
+        }
+
+        // Mouse on right half, show tooltip on left
+        if (clientX > screenWidth / 2) {
+            const newRight = screenWidth - clientX;
+
+            setTooltipStyle({
+                ...baseStyle,
+                right: `${newRight}px`,
+                left: 'auto'
+            });
+        }
+        // Mouse on left half, show tooltip on right
+        else {
+            const newLeft = clientX + TOOLTIP_OFFSET;
+
+            setTooltipStyle({
+                ...baseStyle,
+                left: `${newLeft}px`,
+                right: 'auto'
+            });
+        }
+
+        setShowTooltip(true);
+    };
 
     const handleMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
         mousePositionRef.current = { x: event.clientX, y: event.clientY};
@@ -34,11 +69,7 @@ export default function Button({
         if (showTimeoutId.current) window.clearTimeout(showTimeoutId.current);
 
         showTimeoutId.current = window.setTimeout(() => {
-            setTooltipPosition({
-                top: event.clientY + 10,
-                left: event.clientX + 10
-            });
-            setShowTooltip(true);
+            calculateAndSetTooltipStyle(event.clientX, event.clientY);
         }, TOOLTIP_DELAY);
     }
 
@@ -53,11 +84,7 @@ export default function Button({
         if (showTooltip) setShowTooltip(false);
 
         showTimeoutId.current = window.setTimeout(() => {
-            setTooltipPosition({
-                top: event.clientY + 10,
-                left: event.clientX + 10
-            });
-            setShowTooltip(true);
+            calculateAndSetTooltipStyle(event.clientX, event.clientY);
         }, TOOLTIP_DELAY);
     }
 
@@ -90,7 +117,7 @@ export default function Button({
         >
             {children}
             {tooltip && showTooltip && (
-                <span className="tooltip-text" style={{ top: tooltipPosition.top, left: tooltipPosition.left }}>{tooltip}</span>
+                <span className="tooltip-text" style={tooltipStyle}>{tooltip}</span>
             )}
         </button>
     );
