@@ -1,7 +1,5 @@
 export type Step = { 
-    name: string; 
-    duration: 
-    number; 
-    color: string; 
+    type: string; 
+    duration: number;
     id: number
 };

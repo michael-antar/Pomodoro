@@ -12,7 +12,7 @@ import skipIcon from '../../assets/skipIcon.svg';
 interface TimerDisplayProps {
     seconds: number; 
     stepColor: string; 
-    stepName: string; 
+    stepType: string; 
     isActive: boolean; 
     handleRedo: () => void; 
     handleStartStop: () => void; 
@@ -22,7 +22,7 @@ interface TimerDisplayProps {
 export default function TimerDisplay({ 
     seconds, 
     stepColor, 
-    stepName, 
+    stepType, 
     isActive, 
     handleRedo, 
     handleStartStop, 
@@ -33,7 +33,7 @@ export default function TimerDisplay({
 
     return (
         <div id='timerDisplay'>
-            <h2 id='timerTitle' style={{backgroundColor: stepColor}}>{stepName}</h2>
+            <h2 id='timerTitle' style={{backgroundColor: stepColor}}>{stepType}</h2>
             <div id='innerTimer'>
                 <div id="timeBox">
                     {displayTime(seconds).split('').map((char) => {

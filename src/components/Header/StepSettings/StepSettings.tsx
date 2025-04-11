@@ -7,31 +7,34 @@ import DurationInput from './DurationInput/DurationInput';
 import dragIcon from '../../../assets/dragIcon.svg';
 import trashIcon from '../../../assets/trashIcon.svg';
 
-type Step = { name: string; duration: number; color: string; id: number};
+import type { Step } from '../../../types';
 
 interface StepSettingsProps {
     steps: Step[];
+    stepColors: {work: string, break: string};
     onAdd: (name: string) => void;
-    onRemove: (removedId: number) => void;
     onReorder: (newSteps: Step[]) => void;
     onChangeDuration: (stepId: number, duration: number) => void;
-}
+    onRemove: (removedId: number) => void;
+};
 
 export default function StepSettings({
     steps,
+    stepColors,
     onAdd,
-    onRemove,
     onReorder,
-    onChangeDuration
+    onChangeDuration,
+    onRemove,
 } : StepSettingsProps) {
 
     const [currentSteps, setCurrentSteps] = useState<Step[]>(steps);
+
     const draggedItemId = useRef<number | null>(null);
     const dragOverItemId = useRef<number | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const indicatorElementRef = useRef<HTMLElement | null>(null);
 
-
+    // --- Remove Handler ---
     const handleRemoveStep = (removeId: number) => {
         if (steps.length > 1) {
             onRemove(removeId);
@@ -40,6 +43,8 @@ export default function StepSettings({
             alert('Cannot remove last step');
         }
     };
+
+    // --- Drag and Drop Handlers ---
 
     // Triggered when dragging starts on the icon (img)
     const handleDragStart = (e: React.DragEvent<HTMLImageElement>, item: Step) => {
@@ -181,7 +186,7 @@ export default function StepSettings({
                     key={step.id}
                     id={`step-${step.id}`}
                     className='stepSettingsItem'
-                    style={{backgroundColor: step.color}}
+                    style={{backgroundColor: stepColors[step.type as keyof typeof stepColors]}}
 
                     draggable={true}
 
@@ -189,6 +194,7 @@ export default function StepSettings({
                     onDragOver={handleDragOver}
                     onDrop={handleDrop}
 
+                    // Prevents drag start unless clicking the drag handle
                     onDragStartCapture={(e) => {
                         const isTargetHandle = 
                             (e.target as HTMLElement).tagName.toUpperCase() === 'IMG' 
@@ -200,13 +206,19 @@ export default function StepSettings({
                         }
                     }}
                 >
+
+                    {/* Drag Handle */}
                     <img
                         src={dragIcon}
                         alt='Drag Handle'
                         onDragStart={(e) => handleDragStart(e, step)}
                         onDragEnd={handleDragEnd}
                     />
-                    <span className='stepSettingsItemName'>{step.name}</span>
+
+                    {/* Step Type */}
+                    <span className='stepSettingsItemName'>{step.type}</span>
+
+                    {/* Duration Input */}
                     <label>
                         Duration:
                         <DurationInput
@@ -216,6 +228,8 @@ export default function StepSettings({
                             name={`durationInput${step.id}`}
                         />
                     </label>
+
+                    {/* Remove Step */}
                     <img
                         src={trashIcon}
                         alt='Remove Step'

@@ -4,13 +4,15 @@ import { Step } from '../../types';
 
 interface StepDisplayProps {
     steps: Step[];
+    stepColors: {work: string, break: string};
     activeIndex: number; 
     seconds: number; 
     totalDuration: number;
 }
 
 export default function StepDisplay({ 
-    steps, 
+    steps,
+    stepColors,
     activeIndex, 
     seconds, 
     totalDuration 
@@ -21,18 +23,20 @@ export default function StepDisplay({
             <div id="stepDisplayRow">
                 <h2 id="stepDisplayTitle">Steps</h2>
                 <div id="progressBarContainer">
-                    <div id="progressBar" style={{width: `${(1 - seconds / steps[activeIndex].duration) * 100}%`, backgroundColor: steps[activeIndex].color}}></div>
+                    <div id="progressBar" style={{width: `${(1 - seconds / steps[activeIndex].duration) * 100}%`}}></div>
                 </div>
             </div>
             
             <div id="stepItemContainer">
                 {steps.map((step, index) => {
-                    return <div 
+                    return (
+                        <div 
                             className={`stepItem${index === activeIndex ? " active" : ""}`}
-                            style={{width: `${step.duration / totalDuration * 100}%`, backgroundColor: step.color}}
+                            style={{width: `${step.duration / totalDuration * 100}%`, backgroundColor: stepColors[step.type as keyof typeof stepColors]}}
                             key={step.id}
                         >
                         </div>
+                    );
                 })}
             </div>
         </div>

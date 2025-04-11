@@ -8,35 +8,50 @@ import StepSettings from './StepSettings/StepSettings.tsx';
 import VolumeSettings from './VolumeSettings/VolumeSettings.tsx'
 
 import { Step } from '../../types.ts';
+import ColorSettings from './ColorSettings/ColorSettings.tsx';
 
 interface HeaderProps {
+    onRestart: () => void;
+
+    // --- Settings Handlers ---
     steps: Step[];
-    handleRestart: () => void;
-    handleAddStep: (name: string) => void;
-    handleRemoveStep: (removedId: number) => void;
-    handleReorderSteps: (newSteps: Step[]) => void;
-    handleChangeDuration: (stepId: number, duration: number) => void;
-    playButtonSound: () => void;
-    playAlarmSound: () => void;
+    stepColors: {work: string, break: string};
+
+    // - Step Settings -
+    onAdd: (name: string) => void;
+    onReorder: (newSteps: Step[]) => void;
+    onChangeDuration: (stepId: number, duration: number) => void;
+    onRemove: (removedId: number) => void;
+
+    // - Color Settings -
+    onChangeColor: (type: string, color: string) => void;
+
+    // - Volume Settings -
     buttonVolume: number;
-    alarmVolume: number;
     onChangeButtonVolume: (volume: number) => void;
+    playButtonSound: () => void;
+
+    alarmVolume: number;
     onChangeAlarmVolume: (volume: number) => void;
+    playAlarmSound: () => void;
 }
 
 export default function Header({ 
+    onRestart,
+
+    // --- Settings Handlers ---
     steps,
-    handleRestart,
-    handleAddStep,
-    handleRemoveStep,
-    handleChangeDuration, 
-    handleReorderSteps,
-    playButtonSound,
-    playAlarmSound,
-    buttonVolume,
-    alarmVolume,
-    onChangeButtonVolume,
-    onChangeAlarmVolume
+    stepColors,
+
+    // - Step Settings -
+    onAdd, onReorder, onChangeDuration, onRemove,
+
+    // - Color Settings -
+    onChangeColor,
+
+    // - Volume Settings -
+    buttonVolume, onChangeButtonVolume, playButtonSound,
+    alarmVolume, onChangeAlarmVolume, playAlarmSound,
 } : HeaderProps) {
 
     const [showSettings, setShowSettings] = useState(false);
@@ -44,10 +59,10 @@ export default function Header({
 
     return (
         <div id='header'>
-            <h2 id='headerTitle'>Pomodoro Timer</h2>
+            <h2 id='headerTitle'>Pomodoro</h2>
             <div id="headerLeftPanel">
                 <Button 
-                    onClick={handleRestart}
+                    onClick={onRestart}
                     tooltip='Press to restart steps'
                 >
                     Restart
@@ -67,15 +82,27 @@ export default function Header({
                             <h3 id='settingsTitle'>Settings</h3>
                             <button id='settingsCloseButton' onClick={() => setShowSettings(false)}>X</button>
                         </div>
+
                         <hr className='settingsLine' />
+
                         <StepSettings
                             steps={steps}
-                            onAdd={handleAddStep}
-                            onRemove={handleRemoveStep}
-                            onReorder={handleReorderSteps}
-                            onChangeDuration={handleChangeDuration}
+                            stepColors={stepColors}
+                            onAdd={onAdd}
+                            onReorder={onReorder}
+                            onChangeDuration={onChangeDuration}
+                            onRemove={onRemove}
                         />
+
                         <hr className='settingsLine' />
+
+                        <ColorSettings
+                            stepColors={stepColors}
+                            onChangeColor={onChangeColor}
+                        />
+
+                        <hr className='settingsLine' />
+
                         <VolumeSettings
                             playButtonSound={playButtonSound}
                             playAlarmSound={playAlarmSound}

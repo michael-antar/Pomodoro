@@ -13,12 +13,12 @@ import { initialSteps } from './data/stepData';
 import buttonSound from './assets/buttonSound.mp3';
 import alarmSound from './assets/alarmSound.mp3';
 
-type Step = { name: string; duration: number; color: string; id: number};
+import type { Step } from './types';
 
 
 export default function Timer() {
     const [steps, setSteps] = useState(initialSteps);
-    const nextId = useRef(8);
+    const nextId = useRef(8); // TODO This will cause issues in the future, stop hardcoding this
     const [stepIndex, setStepIndex] = useState(0);
     const [seconds, setSeconds] = useState(steps[0].duration);
 
@@ -26,12 +26,30 @@ export default function Timer() {
     const [hasStarted, setHasStarted] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
 
+    const [stepColors, setStepColors] = useState({ work: '#FF6347', break: '#27BAAE' }); // TODO Maybe set default colors in step data, same with type names
+
     const [buttonVolume, setButtonVolume] = useState(0.3);
     const [alarmVolume, setAlarmVolume] = useState(0.3);
 
     const buttonSoundRef = useRef<HTMLAudioElement | null>(null);
     const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
 
+
+    const currentStep = steps[stepIndex];
+    const currentStepColor = currentStep 
+        ? stepColors[currentStep.type as keyof typeof stepColors] 
+        : '';
+    
+    const currentTitle = isInitialized
+        ? hasStarted
+            ? `${displayTime(seconds)} - ${steps[stepIndex].type}`
+            : `Start ${steps[stepIndex].type}`
+        : 'Pomodoro Timer';
+    document.title = currentTitle;
+
+    const totalDuration = steps.reduce((sum, step) => {
+        return sum + step.duration;
+    }, 0);
 
     const playButtonSound = () => {
         if (buttonSoundRef.current) {
@@ -120,12 +138,18 @@ export default function Timer() {
         setSteps(nextSteps);
     }
 
-    const handleAddStep = (name: string) => {
-        const color = name === 'pomodoro' ? '#FF6347' : '#27BAAE';
-        const duration = name === 'pomodoro' ? 15 : 6;
+    const handleChangeColor = (type: string, color: string) => {
+        setStepColors((prevColors) => ({
+            ...prevColors,
+            [type]: color
+        }));
+    };
+
+    const handleAddStep = (type: string) => {
+        const duration = type === 'work' ? 15 : 3;
         setSteps(
             [...steps,
-            { name: name, duration: duration, color: color, id: nextId.current}]
+            { type: type, duration: duration, id: nextId.current}]
         );
         nextId.current += 1;
     }
@@ -231,39 +255,31 @@ export default function Timer() {
     }, [alarmVolume]);
 
 
-    const currentTitle = isInitialized
-        ? hasStarted
-            ? `${displayTime(seconds)} - ${steps[stepIndex].name}`
-            : `Start ${steps[stepIndex].name}`
-        : 'Pomodoro Timer';
-    document.title = currentTitle;
-
-    const totalDuration = steps.reduce((sum, step) => {
-        return sum + step.duration;
-    }, 0);
-
-
     return (
         <>
             <Header 
-                steps={steps} 
-                handleRestart={handleRestart}
-                handleAddStep={handleAddStep}
-                handleRemoveStep={handleRemoveStep}
-                handleReorderSteps={handleReorderSteps}
-                handleChangeDuration={handleChangeDuration}
-                playButtonSound={playButtonSound}
-                playAlarmSound={playAlarmSound}
-                buttonVolume={buttonVolume}
-                alarmVolume={alarmVolume}
-                onChangeButtonVolume={handleButtonVolume}
-                onChangeAlarmVolume={handleAlarmVolume}
+                onRestart={handleRestart}
+
+                // --- Settings Handlers ---
+                steps={steps}
+                stepColors={stepColors}
+
+                // - Step Settings -
+                onAdd={handleAddStep} onReorder={handleReorderSteps} onChangeDuration={handleChangeDuration} onRemove={handleRemoveStep}
+
+                // - Color Settings -
+                onChangeColor={handleChangeColor}
+
+                // - Volume Settings -
+                buttonVolume={buttonVolume}  onChangeButtonVolume={handleButtonVolume} playButtonSound={playButtonSound}
+                alarmVolume={alarmVolume}  onChangeAlarmVolume={handleAlarmVolume} playAlarmSound={playAlarmSound}
             />
 
             <TimerDisplay 
+                // TODO Organize with comments
                 seconds={seconds}
-                stepColor={steps[stepIndex].color}
-                stepName={steps[stepIndex].name}
+                stepColor={currentStepColor}
+                stepType={steps[stepIndex].type}
                 isActive={isActive}
                 handleRedo={handleRedo}
                 handleStartStop={handleStartStop}
@@ -271,7 +287,9 @@ export default function Timer() {
             />
 
             <StepDisplay 
-                steps={steps} 
+                // TODO Organize with comments
+                steps={steps}
+                stepColors={stepColors}
                 activeIndex={stepIndex} 
                 seconds={seconds} 
                 totalDuration={totalDuration}

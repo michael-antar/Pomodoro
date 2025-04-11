@@ -1,5 +1,5 @@
-const WORK_STEP = { name: 'pomodoro', color: '#FF6347' };
-const BREAK_STEP = { name: 'break', color: '#27BAAE' };
+const WORK_STEP = { type: 'work' };
+const BREAK_STEP = { type: 'break' };
 
 export const initialSteps = [
     {...WORK_STEP, duration: 15, id: 0},
