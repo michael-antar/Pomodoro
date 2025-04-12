@@ -79,7 +79,7 @@ export default function Header({
                     <div className='settingsModal' onClick={(e) => e.stopPropagation()}>
                         
                         <div id='settingsTop'>
-                            <h3 id='settingsTitle'>Settings</h3>
+                            <div className='settingsHeading settingsHeading1'>Settings</div>
                             <button id='settingsCloseButton' onClick={() => setShowSettings(false)}>X</button>
                         </div>
 

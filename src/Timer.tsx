@@ -101,6 +101,9 @@ export default function Timer() {
     }
 
     const handleStartStop = () => {
+        if (alarmSoundRef.current) {
+            alarmSoundRef.current.pause();
+        }
         playButtonSound();
         setIsActive(!isActive);
     }

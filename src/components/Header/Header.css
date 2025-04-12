@@ -46,9 +46,7 @@
     overflow-x: hidden;
 }
 
-.settingsLine {
-    width: 90%;
-}
+
 
 #settingsTop {
     display: flex;
@@ -62,8 +60,27 @@
     height: 30px;
 }
 
-#stepSettings {
+/* Children Util */
+
+.settingsSection {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    width: 390px;
+}
+
+.settingsHeading {
+    margin: 0;
+    font-weight: bold;
+}
+.settingsHeading1 {
+    font-size: 1.75em;
+}
+.settingsHeading2 {
+    font-size: 1.25em;
+}
+
+.settingsLine {
     width: 90%;
+    margin: 20px 0;
 }

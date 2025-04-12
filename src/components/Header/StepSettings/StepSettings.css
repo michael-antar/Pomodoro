@@ -1,15 +1,25 @@
-#stepSettingsButtons {
-    margin-bottom: 5px;
+/* --- Add Buttons --- */
+.stepSettingsButtonContainer {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 2px;
 }
 
-#addPomodoroButton {
-    background-color: var(--step-red);
+.stepSettingsButton {
+    border: 2px solid transparent;
+    border-radius: 10px;
+}
+.stepSettingsButton:hover {
+    border-color: black;
+    cursor: pointer;
 }
 
-#addBreakButton {
-    background-color: var(--step-blue);
+.stepSettingsButtonIcon {
+    height: 1.5em;
+    aspect-ratio: 1;
 }
 
+/* --- Step List Item -- */
 .stepSettingsItem {
     display: flex;
     justify-content: space-between;
@@ -29,6 +39,7 @@
 }
 
 .stepSettingsItemName {
+    text-transform: capitalize;
     width: 75px;
 }
 
@@ -44,7 +55,6 @@
 .stepSettingsItem img[alt="Drag Handle"] {
     cursor: grab;
 }
-
 .stepSettingsItem img[alt="Drag Handle"]:active {
     cursor: grabbing;
 }

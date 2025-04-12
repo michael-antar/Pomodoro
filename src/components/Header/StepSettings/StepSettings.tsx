@@ -2,8 +2,10 @@ import './StepSettings.css'
 
 import { useState, useRef, useEffect } from 'react';
 
+import Button from '../../Button/Button';
 import DurationInput from './DurationInput/DurationInput';
 
+import plusIcon from '../../../assets/plusIcon.svg';
 import dragIcon from '../../../assets/dragIcon.svg';
 import trashIcon from '../../../assets/trashIcon.svg';
 
@@ -171,72 +173,96 @@ export default function StepSettings({
     }, [steps]);
 
     return (
-        <div className='stepSettings'>
-            <h3 id='stepSettingsTitle'>Edit and Rearrange Steps</h3>
-            <div id='stepSettingsButtons'>
-                <button id="addPomodoroButton" onClick={() => onAdd('pomodoro')}>
-                    Add pomodoro
-                </button>
-                <button id="addBreakButton" onClick={() => onAdd('break')}>
-                    Add break
-                </button>
-            </div>
-            {currentSteps.map((step) => (
-                <div
-                    key={step.id}
-                    id={`step-${step.id}`}
-                    className='stepSettingsItem'
-                    style={{backgroundColor: stepColors[step.type as keyof typeof stepColors]}}
-
-                    draggable={true}
-
-                    onDragEnter={(e) => handleDragEnter(e, step)}
-                    onDragOver={handleDragOver}
-                    onDrop={handleDrop}
-
-                    // Prevents drag start unless clicking the drag handle
-                    onDragStartCapture={(e) => {
-                        const isTargetHandle = 
-                            (e.target as HTMLElement).tagName.toUpperCase() === 'IMG' 
-                            && (e.target as HTMLElement).closest('.stepSettingsItem') === e.currentTarget;
-
-                        if (!isTargetHandle) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                        }
-                    }}
+        <div className='settingsSection'>
+            <div className='settingsHeading settingsHeading2'>Edit and Rearrange Steps</div>
+            <div className='stepSettingsButtonContainer'>
+                {/* Add Work Step Button */}
+                <Button
+                    onClick={() => onAdd('work')}
+                    tooltip='Add work step'
+                    className='stepSettingsButton'
+                    style={{backgroundColor: stepColors['work']}}
                 >
-
-                    {/* Drag Handle */}
                     <img
-                        src={dragIcon}
-                        alt='Drag Handle'
-                        onDragStart={(e) => handleDragStart(e, step)}
-                        onDragEnd={handleDragEnd}
+                        className='stepSettingsButtonIcon'
+                        src={plusIcon}
+                        alt='Add work step'
+                        draggable='false'
                     />
+                </Button>
+                {/* Add Break Step Button */}
+                <Button
+                    onClick={() => onAdd('break')}
+                    tooltip='Add break step'
+                    className='stepSettingsButton'
+                    style={{backgroundColor: stepColors['break']}}
+                >
+                    <img
+                        className='stepSettingsButtonIcon'
+                        src={plusIcon}
+                        alt='Add break step'
+                        draggable='false'
+                    />
+                </Button>
+            </div>
+            <div className='stepSettingsItemContainer'>
+                {currentSteps.map((step) => (
+                    <div
+                        key={step.id}
+                        id={`step-${step.id}`}
+                        className='stepSettingsItem'
+                        style={{backgroundColor: stepColors[step.type as keyof typeof stepColors]}}
 
-                    {/* Step Type */}
-                    <span className='stepSettingsItemName'>{step.type}</span>
+                        draggable={true}
 
-                    {/* Duration Input */}
-                    <label>
-                        Duration:
-                        <DurationInput
-                            stepId={step.id}
-                            initialDuration={step.duration}
-                            onChangeDuration={onChangeDuration}
-                            name={`durationInput${step.id}`}
+                        onDragEnter={(e) => handleDragEnter(e, step)}
+                        onDragOver={handleDragOver}
+                        onDrop={handleDrop}
+
+                        // Prevents drag start unless clicking the drag handle
+                        onDragStartCapture={(e) => {
+                            const isTargetHandle = 
+                                (e.target as HTMLElement).tagName.toUpperCase() === 'IMG' 
+                                && (e.target as HTMLElement).closest('.stepSettingsItem') === e.currentTarget;
+
+                            if (!isTargetHandle) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }
+                        }}
+                    >
+
+                        {/* Drag Handle */}
+                        <img
+                            src={dragIcon}
+                            alt='Drag Handle'
+                            onDragStart={(e) => handleDragStart(e, step)}
+                            onDragEnd={handleDragEnd}
                         />
-                    </label>
 
-                    {/* Remove Step */}
-                    <img
-                        src={trashIcon}
-                        alt='Remove Step'
-                        onClick={() => handleRemoveStep(step.id)}
-                    />
-                </div>
-            ))}
+                        {/* Step Type */}
+                        <span className='stepSettingsItemName'>{step.type}</span>
+
+                        {/* Duration Input */}
+                        <label>
+                            Duration:
+                            <DurationInput
+                                stepId={step.id}
+                                initialDuration={step.duration}
+                                onChangeDuration={onChangeDuration}
+                                name={`durationInput${step.id}`}
+                            />
+                        </label>
+
+                        {/* Remove Step */}
+                        <img
+                            src={trashIcon}
+                            alt='Remove Step'
+                            onClick={() => handleRemoveStep(step.id)}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

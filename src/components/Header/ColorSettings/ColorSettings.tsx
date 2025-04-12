@@ -28,34 +28,37 @@ export default function ColorSettings({
     };
 
     return (
-        <div className='colorSettings'>
-            {(Object.keys(stepColors) as Array<keyof typeof stepColors>).map((key) => {
-                const currentInputValue = inputValues[key];
-                const isInputValid = isValidHexColor(currentInputValue);
+        <div className='settingsSection'>
+            <div className='settingsHeading settingsHeading2'>Change Step Colors</div>
+            <div className='colorSettingsItemContainer'>
+                {(Object.keys(stepColors) as Array<keyof typeof stepColors>).map((key) => {
+                    const currentInputValue = inputValues[key];
+                    const isInputValid = isValidHexColor(currentInputValue);
 
-                return (
-                    <div key={key} className='colorSettingsItem'>
-                        <div
-                            className='colorSettingsBox'
-                            style={{ backgroundColor: isInputValid ? currentInputValue : stepColors[key] }}
-                        ></div>
-                        <label htmlFor={`colorSettingsInput-${key}`}>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
-                        <input
-                            className={`colorSettingsInput ${!isInputValid ? 'invalid' : ''}`}
-                            id={`colorSettingsInput-${key}`}
-                            type='text'
-                            value={currentInputValue}
-                            onChange={(e) => handleInputChange(key, e)}
-                        />
-                        <button
-                            onClick={() => onChangeColor(key, inputValues[key])}
-                            disabled={!isInputValid}
-                        >
-                            Set
-                        </button>
-                    </div>
-                );
-            })}
+                    return (
+                        <div key={key} className='colorSettingsItem'>
+                            <div
+                                className='colorSettingsBox'
+                                style={{ backgroundColor: isInputValid ? currentInputValue : stepColors[key] }}
+                            ></div>
+                            <label htmlFor={`colorSettingsInput-${key}`}>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+                            <input
+                                className={`colorSettingsInput ${!isInputValid ? 'invalid' : ''}`}
+                                id={`colorSettingsInput-${key}`}
+                                type='text'
+                                value={currentInputValue}
+                                onChange={(e) => handleInputChange(key, e)}
+                            />
+                            <button
+                                onClick={() => onChangeColor(key, inputValues[key])}
+                                disabled={!isInputValid}
+                            >
+                                Set
+                            </button>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

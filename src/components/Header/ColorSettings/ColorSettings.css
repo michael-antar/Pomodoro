@@ -1,22 +1,24 @@
-/* Existing styles */
-.colorSettings {
+.colorSettingsItemContainer {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Add some space between items */
+    align-items: center;
+    gap: 15px;
 }
 
-.colorSettingItem { /* Style for the new wrapper div */
+.colorSettingsItem {
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between elements in a row */
+    justify-content: space-between;
+    width: 350px;
 }
 
 .colorSettingsBox {
     width: 20px;
     height: 20px;
     border: 1px solid #ccc;
-    display: inline-block; /* Or keep as block if preferred */
-    vertical-align: middle; /* Align with text/input */
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .colorSettingsInput {
@@ -24,9 +26,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
 }
-
-/* Style for invalid input */
 .colorSettingsInput.invalid {
     border-color: red;
-    outline-color: red; /* Optional: change focus outline too */
-}
+    outline-color: red;
+}   

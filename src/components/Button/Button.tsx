@@ -1,6 +1,7 @@
 import './Button.css';
 
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ButtonProps {
     onClick: () => void; 
@@ -116,8 +117,9 @@ export default function Button({
             style={style}
         >
             {children}
-            {tooltip && showTooltip && (
-                <span className="tooltip-text" style={tooltipStyle}>{tooltip}</span>
+            {tooltip && showTooltip && createPortal(
+                <span className="tooltip-text" style={tooltipStyle}>{tooltip}</span>,
+                document.body
             )}
         </button>
     );
