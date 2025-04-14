@@ -21,6 +21,10 @@
     vertical-align: middle;
 }
 
+.colorSettingsName {
+    width: 30px;
+}
+
 .colorSettingsInput {
     padding: 5px;
     border: 1px solid #ccc;

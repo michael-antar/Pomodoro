@@ -41,7 +41,7 @@ export default function ColorSettings({
                                 className='colorSettingsBox'
                                 style={{ backgroundColor: isInputValid ? currentInputValue : stepColors[key] }}
                             ></div>
-                            <label htmlFor={`colorSettingsInput-${key}`}>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+                            <label className='colorSettingsName' htmlFor={`colorSettingsInput-${key}`}>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
                             <input
                                 className={`colorSettingsInput ${!isInputValid ? 'invalid' : ''}`}
                                 id={`colorSettingsInput-${key}`}

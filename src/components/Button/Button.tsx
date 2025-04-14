@@ -27,7 +27,7 @@ export default function Button({
     const showTimeoutId = useRef<number | null>(null);
     const mousePositionRef = useRef({ x: 0, y: 0 });
 
-    const TOOLTIP_DELAY = 1500;
+    const TOOLTIP_DELAY = 1000;
     const TOOLTIP_OFFSET = 10;
 
     // Handles position of tooltip relative to mouse and shows it

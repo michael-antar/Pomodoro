@@ -1,6 +1,6 @@
 import './TimerDisplay.css';
 
-import TimerButton from './TimerButton/TimerButton';
+import TimerButton from '../Button/TimerButton/TimerButton';
 
 import { displayTime } from "../../utils/DisplayTime";
 

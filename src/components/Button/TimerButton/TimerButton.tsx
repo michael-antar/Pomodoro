@@ -1,6 +1,6 @@
 import './TimerButton.css';
 
-import Button from '../../Button/Button';
+import Button from '../Button';
 
 interface TimerButtonProps {
     onClick: () => void; 

@@ -3,11 +3,16 @@ import './Header.css';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import restartIcon from '../../assets/restartIcon.svg';
+import settingsIcon from '../../assets/settingsIcon.svg';
+import closeIcon from '../../assets/closeIcon.svg';
+
 import Button from '../Button/Button.tsx';
+import TimerButton from '../Button/TimerButton/TimerButton.tsx';
 import StepSettings from './StepSettings/StepSettings.tsx';
 import VolumeSettings from './VolumeSettings/VolumeSettings.tsx'
 
-import { Step } from '../../types.ts';
+import type { Step } from '../../types.ts';
 import ColorSettings from './ColorSettings/ColorSettings.tsx';
 
 interface HeaderProps {
@@ -58,29 +63,42 @@ export default function Header({
 
 
     return (
-        <div id='header'>
+        <div className='header'>
             <h2 id='headerTitle'>Pomodoro</h2>
             <div id="headerLeftPanel">
-                <Button 
+                <TimerButton 
                     onClick={onRestart}
                     tooltip='Press to restart steps'
-                >
-                    Restart
-                </Button>
-                <Button 
-                    onClick={() =>  setShowSettings(true)}
+                    iconSrc={restartIcon}
+                    style={{width: '30px'}}
+                    alt='Restart Steps Button'
+                />
+                <TimerButton 
+                    onClick={() => setShowSettings(true)}
                     tooltip='Press to open settings'
-                >
-                    Settings
-                </Button>
+                    iconSrc={settingsIcon}
+                    style={{width: '30px'}}
+                    alt='Open Settings Button'
+                />
             </div>
             {showSettings && createPortal(
                 <div className='settingsBackdrop' onClick={() => setShowSettings(false)}>
                     <div className='settingsModal' onClick={(e) => e.stopPropagation()}>
                         
-                        <div id='settingsTop'>
+                        <div className='settingsHeader'>
                             <div className='settingsHeading settingsHeading1'>Settings</div>
-                            <button id='settingsCloseButton' onClick={() => setShowSettings(false)}>X</button>
+                            <Button
+                                onClick={() => setShowSettings(false)}
+                                tooltip='Press to close settings'
+                                className='settingsCloseButton'
+                            >
+                                <img
+                                    className='settingsCloseButtonIcon'
+                                    src={closeIcon}
+                                    alt='Close Settings'
+                                    draggable='false'
+                                />
+                            </Button>
                         </div>
 
                         <hr className='settingsLine' />

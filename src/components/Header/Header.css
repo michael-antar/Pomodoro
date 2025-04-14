@@ -1,9 +1,16 @@
-#header {
+.header {
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
-    border-bottom: 1px solid var(--black);
-    padding-bottom: 5px;
+    padding: 10px;
+
+    background-color: var(--dark-grey);
+    border-bottom: 2px solid var(--black);
+    box-shadow: 
+        0 -1px 10px black inset,
+        0 0 30px black;
 }
 
 #headerTitle {
@@ -38,22 +45,39 @@
     background-color: var(--white);
     padding: 20px;
     border: 2px solid grey;
-    border-radius: 5px;
+    border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     height: 80vh;
     width: clamp(300px, 80vw, 600px);
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-color: var(--grey) transparent;
 }
 
 
-
-#settingsTop {
+.settingsHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     width: 90%;
+}
+
+.settingsCloseButton {
+    border: none;
+    border-radius: 100%;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+.settingsCloseButton:hover {
+    cursor: pointer;
+    background-color: #00000015;
+}
+
+.settingsCloseButtonIcon {
+    height: 2.5em;
+    aspect-ratio: 1;
 }
 
 #settingsCloseButton {
