@@ -21,13 +21,6 @@ body {
     --display-green: #94B0A0;
 }
 
-#root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
 h2 {
     margin: 0;
     padding: 0 10px;

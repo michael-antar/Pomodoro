@@ -14,6 +14,7 @@ import buttonSound from './assets/buttonSound.mp3';
 import alarmSound from './assets/alarmSound.mp3';
 
 import type { Step } from './types';
+import Sidebar from './components/Sidebar/Sidebar';
 
 
 export default function Timer() {
@@ -259,7 +260,7 @@ export default function Timer() {
 
 
     return (
-        <>
+        <div className='timerContainer'>
             <Header 
                 onRestart={handleRestart}
 
@@ -278,25 +279,36 @@ export default function Timer() {
                 alarmVolume={alarmVolume}  onChangeAlarmVolume={handleAlarmVolume} playAlarmSound={playAlarmSound}
             />
 
-            <TimerDisplay 
-                // TODO Organize with comments
-                seconds={seconds}
-                stepColor={currentStepColor}
-                stepType={steps[stepIndex].type}
-                isActive={isActive}
-                handleRedo={handleRedo}
-                handleStartStop={handleStartStop}
-                handleSkip={handleSkip}
-            />
+            <main>
+                <Sidebar />
 
-            <StepDisplay 
-                // TODO Organize with comments
-                steps={steps}
-                stepColors={stepColors}
-                activeIndex={stepIndex} 
-                seconds={seconds} 
-                totalDuration={totalDuration}
-            />
-        </>
+                <div className='mainCenter'>
+                    <TimerDisplay 
+                        // TODO Organize with comments
+                        seconds={seconds}
+                        stepColor={currentStepColor}
+                        stepType={steps[stepIndex].type}
+                        isActive={isActive}
+                        handleRedo={handleRedo}
+                        handleStartStop={handleStartStop}
+                        handleSkip={handleSkip}
+                    />
+
+                    <StepDisplay 
+                        // TODO Organize with comments
+                        steps={steps}
+                        stepColors={stepColors}
+                        activeIndex={stepIndex} 
+                        seconds={seconds} 
+                        totalDuration={totalDuration}
+                    />
+                </div>
+
+                <div></div>
+                
+            </main>
+
+            
+        </div>
     );
 }

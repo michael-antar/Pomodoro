@@ -45,6 +45,7 @@ export default function TimerDisplay({
                         onClick={handleRedo}
                         tooltip='Press left arrow to redo step'
                         style={{width: '60px'}}
+                        className='timerDisplayButton'
                         iconSrc={redoIcon} 
                         alt="Redo Button" 
                     />
@@ -52,6 +53,7 @@ export default function TimerDisplay({
                         onClick={handleStartStop}
                         tooltip='Press space to play/pause step'
                         style={{width: '80px'}}
+                        className='timerDisplayButton'
                         iconSrc={playIcon} 
                         iconSrcAlt={pauseIcon} 
                         isToggled={isActive} 
@@ -61,6 +63,7 @@ export default function TimerDisplay({
                         onClick={handleSkip}
                         tooltip='Press right arrow to skip step'
                         style={{width: '60px'}}
+                        className='timerDisplayButton'
                         iconSrc={skipIcon} 
                         alt="Skip Button" 
                     />

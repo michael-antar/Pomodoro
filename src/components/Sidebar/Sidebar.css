@@ -1,0 +1,32 @@
+.sidebar { 
+    width: 54px; 
+    transition: width 0.3s ease; 
+    overflow: hidden; 
+    display: flex;
+    background-color: var(--dark-grey);
+}
+
+.sidebar.expanded { 
+    width: 300px; 
+}
+
+.sidebarControls { 
+    width: 50px;
+    padding: 2px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0; 
+
+    gap: 10px;
+}
+
+.sidebarContent { 
+    flex-grow: 1;
+    border-left: 1px solid var(--grey);
+    /* display: none initially? or controlled by width */ 
+}
+.sidebar:not(.expanded) .sidebar-content { 
+    display: none; 
+}

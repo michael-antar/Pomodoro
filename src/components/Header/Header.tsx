@@ -64,20 +64,20 @@ export default function Header({
 
     return (
         <div className='header'>
-            <h2 id='headerTitle'>Pomodoro</h2>
-            <div id="headerLeftPanel">
+            <h2 className='headerHeading'>Pomodoro</h2>
+            <div className="headerRight">
                 <TimerButton 
                     onClick={onRestart}
                     tooltip='Press to restart steps'
                     iconSrc={restartIcon}
-                    style={{width: '30px'}}
+                    // style={{width: '50px'}}
                     alt='Restart Steps Button'
                 />
                 <TimerButton 
                     onClick={() => setShowSettings(true)}
                     tooltip='Press to open settings'
                     iconSrc={settingsIcon}
-                    style={{width: '30px'}}
+                    // style={{width: '50px'}}
                     alt='Open Settings Button'
                 />
             </div>

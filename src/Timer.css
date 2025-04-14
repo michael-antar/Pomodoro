@@ -1,0 +1,17 @@
+.timerContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.mainCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

@@ -7,6 +7,7 @@ interface TimerButtonProps {
     disabled?: boolean; 
     tooltip?: string;
     style?: React.CSSProperties;
+    className?: string;
     iconSrc: string; 
     iconSrcAlt?: string; 
     isToggled?: boolean; 
@@ -18,6 +19,7 @@ export default function TimerButton({
     disabled,
     tooltip,
     style,
+    className,
     iconSrc,
     iconSrcAlt,
     isToggled = false,
@@ -29,7 +31,7 @@ export default function TimerButton({
             onClick={onClick}
             disabled={disabled}
             tooltip={tooltip}
-            className={'timerButton'}
+            className={`timerButton ${className}`}
             style={style}
         >
             <img
