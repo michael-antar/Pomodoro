@@ -195,17 +195,16 @@ export default function Timer() {
     // Add keybindings
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
+            if (document.activeElement !== document.body) {
+                return;
+            }
+            
             if (e.code === 'Space') {
-                const focusedElement = document.activeElement;
-
-                if (focusedElement && focusedElement.tagName === 'BUTTON') {
-                    return;
-                }
-
                 e.preventDefault();
                 handleStartStop();
             } 
             else if (e.code === 'ArrowLeft') {
+                
                 e.preventDefault();
                 handleRedo();
             } 
